@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My First App</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="title_activity_myname">Vem: Mattias Kindborg\n</string>
+    <string name="title_activity_myoccupation">Vad: Arbetar som programmerare inom C# .NET\n</string>
+    <string name="title_activity_mymotivation">Varför: Jag vill bredda mina kunskaper om programmering, och Android verkar vara roligt.</string>
+    
+</resources>
