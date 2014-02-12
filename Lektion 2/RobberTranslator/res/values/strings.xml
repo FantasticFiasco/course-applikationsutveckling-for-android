@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Robber Translator</string>
+    <string name="ok">OK</string>
+    <string name="mainactivity_translateto">Translate to</string>
+    <string name="mainactivity_translatefrom">Translate from</string>
+    <string name="mainactivity_about">About</string>
+    <string name="mainactivity_abouttext">The Robber Language is a Swedish language game. It became popular after the books about Kalle Blomkvist by Astrid Lindgren, where the children use it as a code, both at play and in solving actual crimes. The principle is easy enough. Every consonant (spelling matters, not pronunciation) is doubled, and an o is inserted in-between. Vowels are left intact.</string>
+    <string name="mainactivity_quit">Quit</string>
+
+</resources>
