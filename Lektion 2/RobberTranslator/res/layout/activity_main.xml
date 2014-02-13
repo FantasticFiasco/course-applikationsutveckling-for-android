@@ -26,13 +26,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mainactivity_translateto"/>
+            android:text="@string/translateto"
+            android:onClick="onTranslateTo"/>
         
         <!-- Translate from -->
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mainactivity_translatefrom"/>
+            android:text="@string/translatefrom"
+            android:onClick="onTranslateFrom"/>
         
         <!-- About -->
         <Button
