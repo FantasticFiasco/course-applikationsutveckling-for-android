@@ -1,9 +1,11 @@
 package com.kindborg.mattias.robbertranslator;
 
+import com.kindborg.mattias.robbertranslator.translator.Translator;
+
 import android.os.*;
 import android.app.*;
 import android.view.*;
-import android.widget.TextView;
+import android.widget.*;
 import android.support.v4.app.*;
 import android.annotation.*;
 
@@ -11,17 +13,26 @@ public class TranslateActivity extends Activity {
 
 	public static final String EXTRA_ISTRANSLATINGTOROBBER = "com.kindborg.mattias.robbertranslator.TranslateActivity.EXTRA_ISTRANSLATINGTOROBBER";
 	
+	private EditText textToTranslate;
+	private TextView translatedText;
+	private Translator translator;
+	private boolean isTranslatingToRobber;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_translate);
+		textToTranslate = (EditText)findViewById(R.id.translateactivity_texttotranslate);
+		translatedText = (TextView)findViewById(R.id.translateactivity_translatedtext);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		translator = new Translator();
+		
 		// Determine whether the activity should translate to or from Robber Language
-		boolean isTranslatingToRobber = getIsTranslatingToRobber();
+		isTranslatingToRobber = getIsTranslatingToRobber();
 		
 		// Set title
 		setTitle(isTranslatingToRobber ?
@@ -58,6 +69,19 @@ public class TranslateActivity extends Activity {
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onTranslate(View view) {
+		String input = textToTranslate.getText().toString();
+		
+		String output = isTranslatingToRobber ?
+			translator.toRobberLanguage(input) :
+			translator.fromRobberLanguage(input);
+			
+		translatedText.append(output + "\n");
+		
+		// Clear input
+		textToTranslate.setText("");
 	}
 	
 	/**
