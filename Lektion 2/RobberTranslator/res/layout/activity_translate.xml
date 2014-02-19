@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dip"
         android:layout_gravity="right"
-        android:text="@string/translateactivity_translate" />
+        android:text="@string/translateactivity_translate"
+        android:onClick="onTranslate" />
     
     <!-- Output description -->
     <TextView
