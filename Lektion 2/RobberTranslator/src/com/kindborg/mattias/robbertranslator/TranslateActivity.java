@@ -12,6 +12,7 @@ import android.annotation.*;
 public class TranslateActivity extends Activity {
 
 	public static final String EXTRA_ISTRANSLATINGTOROBBER = "com.kindborg.mattias.robbertranslator.TranslateActivity.EXTRA_ISTRANSLATINGTOROBBER";
+	private static final String INSTANCESTATE_TRANSLATEDTEXT = "com.kindborg.mattias.robbertranslator.TranslateActivity.INSTANCESTATE_TRANSLATEDTEXT";
 	
 	private EditText textToTranslate;
 	private TextView translatedText;
@@ -44,6 +45,11 @@ public class TranslateActivity extends Activity {
 		inputDescription.setText(isTranslatingToRobber ?
 			R.string.translateactivity_inputdescription_translatetorobber :
 			R.string.translateactivity_inputdescription_translatefromrobber);
+		
+		// Restore instance state
+		if (savedInstanceState != null) {
+			translatedText.setText(savedInstanceState.getCharSequence(INSTANCESTATE_TRANSLATEDTEXT));
+		}
 	}
 
 	@Override
@@ -82,6 +88,11 @@ public class TranslateActivity extends Activity {
 		
 		// Clear input
 		textToTranslate.setText("");
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putCharSequence(INSTANCESTATE_TRANSLATEDTEXT, translatedText.getText());
 	}
 	
 	/**
