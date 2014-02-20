@@ -13,6 +13,7 @@
     <string name="translateactivity_inputdescription_translatefromrobber">Text to translate from Robber Language</string>
     <string name="translateactivity_translate">Translate</string>
     <string name="translateactivity_translatedtext">Translated text</string>
+    <string name="translateactivity_noinput">There is nothing to translate!</string>
     <string name="action_settings">Settings</string>
 
 </resources>
