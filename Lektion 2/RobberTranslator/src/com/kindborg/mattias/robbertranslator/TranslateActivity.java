@@ -7,6 +7,7 @@ import android.app.*;
 import android.view.*;
 import android.widget.*;
 import android.support.v4.app.*;
+import android.text.*;
 import android.annotation.*;
 
 public class TranslateActivity extends Activity {
@@ -79,6 +80,12 @@ public class TranslateActivity extends Activity {
 	
 	public void onTranslate(View view) {
 		String input = textToTranslate.getText().toString();
+		
+		if (TextUtils.isEmpty(input)) {
+			Toast.makeText(this, R.string.translateactivity_noinput, Toast.LENGTH_SHORT)
+				.show();
+			return;
+		}
 		
 		String output = isTranslatingToRobber ?
 			translator.toRobberLanguage(input) :
