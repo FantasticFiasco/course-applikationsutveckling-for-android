@@ -17,6 +17,7 @@ public class TranslateActivity extends Activity {
 	
 	private EditText textToTranslate;
 	private TextView translatedText;
+	private ScrollView translatedTextScrollView;
 	private Translator translator;
 	private boolean isTranslatingToRobber;
 	
@@ -27,6 +28,7 @@ public class TranslateActivity extends Activity {
 		setContentView(R.layout.activity_translate);
 		textToTranslate = (EditText)findViewById(R.id.translateactivity_texttotranslate);
 		translatedText = (TextView)findViewById(R.id.translateactivity_translatedtext);
+		translatedTextScrollView = (ScrollView)findViewById(R.id.translateactivity_translatedtextscrollview);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -91,7 +93,9 @@ public class TranslateActivity extends Activity {
 			translator.toRobberLanguage(input) :
 			translator.fromRobberLanguage(input);
 			
+		// Append text and scroll if necessary
 		translatedText.append(output + "\n");
+		translatedTextScrollView.fullScroll(View.FOCUS_DOWN);
 		
 		// Clear input
 		textToTranslate.setText("");
