@@ -5,6 +5,7 @@ import com.kindborg.mattias.robbertranslator.translator.Translator;
 import android.os.*;
 import android.app.*;
 import android.view.*;
+import android.view.ContextMenu.*;
 import android.widget.*;
 import android.support.v4.app.*;
 import android.text.*;
