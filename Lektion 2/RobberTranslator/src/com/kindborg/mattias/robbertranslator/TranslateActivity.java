@@ -33,6 +33,9 @@ public class TranslateActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		// Register context menu on translated text
+		registerForContextMenu(translatedText);
+		
 		translator = new Translator();
 		
 		// Determine whether the activity should translate to or from Robber Language
@@ -56,13 +59,6 @@ public class TranslateActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.translate, menu);
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -80,6 +76,25 @@ public class TranslateActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		
+		getMenuInflater().inflate(R.menu.contextmenu_translatedtext, menu);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.contextmenu_translatedtext_action_clear:
+				translatedText.setText("");
+				return true;
+				
+			default:
+				return super.onContextItemSelected(item);
+		}
+	}
+
 	public void onTranslate(View view) {
 		String input = textToTranslate.getText().toString();
 		
