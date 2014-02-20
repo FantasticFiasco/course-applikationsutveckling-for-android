@@ -39,9 +39,13 @@
         android:text="@string/translateactivity_translatedtext" />
     
     <!-- Translated text -->
-    <TextView
-        android:id="@+id/translateactivity_translatedtext"
+    <ScrollView
+        android:id="@+id/translateactivity_translatedtextscrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/translateactivity_translatedtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 </LinearLayout>
