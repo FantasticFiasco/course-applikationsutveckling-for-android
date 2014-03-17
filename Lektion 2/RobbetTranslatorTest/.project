@@ -18,7 +18,13 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/RobberTranslator/test</locationURI>
+			<locationURI>TESTED_PROJECT/test</locationURI>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>TESTED_PROJECT</name>
+			<value>$%7BPARENT-1-PROJECT_LOC%7D/RobberTranslator</value>
+		</variable>
+	</variableList>
 </projectDescription>
