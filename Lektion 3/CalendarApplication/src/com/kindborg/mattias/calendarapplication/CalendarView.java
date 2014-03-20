@@ -64,6 +64,8 @@ public class CalendarView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		
+		// See http://catchthecows.com/?p=72
 	}
 
 	@Override
