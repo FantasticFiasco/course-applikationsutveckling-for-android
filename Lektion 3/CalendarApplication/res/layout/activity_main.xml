@@ -8,11 +8,13 @@
     
     <!-- Displaying current date -->       
     <com.kindborg.mattias.calendarapplication.CalendarView
+        android:id="@+id/currentDateCalendarView"
         android:layout_width="50dp"
         android:layout_height="75dp" />
     
     <!-- Displaying fixed date, i.e. 19/03/2014 -->
     <com.kindborg.mattias.calendarapplication.CalendarView
+        android:id="@+id/fixedDateCalendarView"
         android:layout_width="255dp"
         android:layout_height="133dp"
         custom:date="Wed, 19 Mar 2014 00:00:00 GMT" />

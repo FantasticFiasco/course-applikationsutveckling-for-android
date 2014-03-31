@@ -2,7 +2,6 @@ package com.kindborg.mattias.calendarapplication;
 
 import static com.kindborg.mattias.calendarapplication.assertion.Assert.*;
 
-import java.text.DateFormatSymbols;
 import java.util.*;
 
 import org.apache.http.impl.cookie.*;
@@ -57,6 +56,7 @@ public class CalendarView extends View {
 		assertNotNull(date);
 		
 		calendar = date;
+		invalidate();
 	}
 	
 	/**
@@ -64,6 +64,7 @@ public class CalendarView extends View {
 	 */
 	public void nextDay() {
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		invalidate();
 	}
 
 	@Override
