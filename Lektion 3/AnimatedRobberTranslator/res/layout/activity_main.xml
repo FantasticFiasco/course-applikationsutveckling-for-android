@@ -27,42 +27,38 @@
                 android:layout_marginBottom="20dip"
                 android:text="@string/app_name"
                 android:textSize="30sp"/>
-            
-            <!-- Buttons being animated when activity is shown -->
-            <LinearLayout
+                       
+            <!-- Translate to -->
+            <Button
+                android:id="@+id/translateToButton"
                 android:layout_width="match_parent"
-            	android:layout_height="wrap_content"
-            	android:orientation="vertical"
-            	android:layoutAnimation="@anim/button_animation">
+                android:layout_height="wrap_content"
+                android:text="@string/translateto"
+                android:onClick="onTranslateTo"/>
             
-                <!-- Translate to -->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/translateto"
-                    android:onClick="onTranslateTo"/>
+            <!-- Translate from -->
+            <Button
+                android:id="@+id/translateFromButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/translatefrom"
+                android:onClick="onTranslateFrom"/>
             
-                <!-- Translate from -->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/translatefrom"
-                    android:onClick="onTranslateFrom"/>
+            <!-- About -->
+            <Button
+                android:id="@+id/aboutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mainactivity_about"
+                android:onClick="onAbout"/>
             
-                <!-- About -->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mainactivity_about"
-                    android:onClick="onAbout"/>
-            
-                <!-- Quit -->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mainactivity_quit"
-                    android:onClick="onQuit"/>
-            </LinearLayout>
+            <!-- Quit -->
+            <Button
+                android:id="@+id/quitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mainactivity_quit"
+                android:onClick="onQuit"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
