@@ -17,13 +17,10 @@ import android.view.*;
 public class CalendarView extends View {
 	
 	private final Bitmap background;
-	private final TextPaint monthForeground;
-	private final TextPaint dateForeground;
-	private final TextPaint dayForeground;
 	private final RectF backgroundSize;
-	private final RectF monthForegroundDestination;
-	private final RectF dateForegroundDestination;
-	private final RectF dayForegroundDestination;
+	private final TextGraphics monthGraphics;
+	private final TextGraphics dateGraphics;
+	private final TextGraphics dayGraphics;
 		
 	private Calendar calendar;
 	
@@ -31,15 +28,11 @@ public class CalendarView extends View {
 		super(context, attrs);
 		
 		background = BitmapFactory.decodeResource(getResources(), R.drawable.calendar_sheet);
-		monthForeground = createTextPaint(Color.WHITE, false);
-		dateForeground = createTextPaint(Color.BLACK, true);
-		dayForeground = createTextPaint(Color.BLACK, false);
-		
 		backgroundSize = new RectF();
-		monthForegroundDestination = new RectF();
-		dateForegroundDestination = new RectF();
-		dayForegroundDestination = new RectF();
-		
+		monthGraphics = new TextGraphics(Color.WHITE, false);
+		dateGraphics = new TextGraphics(Color.BLACK, true);
+		dayGraphics = new TextGraphics(Color.BLACK, false);
+				
 		calendar = Calendar.getInstance();
 		
 		// Make sure XML configuration is respected
@@ -92,22 +85,22 @@ public class CalendarView extends View {
 		float right = 0.95f * w;
 		
 		// Calculate month destination
-		monthForegroundDestination.left = left;
-		monthForegroundDestination.right = right;
-		monthForegroundDestination.top = 0.25f * h;
-		monthForegroundDestination.bottom = 0.3825f * h;
+		monthGraphics.destination.left = left;
+		monthGraphics.destination.right = right;
+		monthGraphics.destination.top = 0.25f * h;
+		monthGraphics.destination.bottom = 0.3825f * h;
 		
 		// Calculate date destination
-		dateForegroundDestination.left = left;
-		dateForegroundDestination.right = right;
-		dateForegroundDestination.top = 0.48f * h;
-		dateForegroundDestination.bottom = 0.78f * h;
+		dateGraphics.destination.left = left;
+		dateGraphics.destination.right = right;
+		dateGraphics.destination.top = 0.48f * h;
+		dateGraphics.destination.bottom = 0.78f * h;
 		
 		// Calculate day destination
-		dayForegroundDestination.left = left;
-		dayForegroundDestination.right = right;
-		dayForegroundDestination.top = 0.83f * h;
-		dayForegroundDestination.bottom = 0.95f * h;
+		dayGraphics.destination.left = left;
+		dayGraphics.destination.right = right;
+		dayGraphics.destination.top = 0.83f * h;
+		dayGraphics.destination.bottom = 0.95f * h;
 	}
 	
 	@Override
@@ -121,73 +114,57 @@ public class CalendarView extends View {
 		drawText(
 			calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()),
 			canvas,
-			monthForeground,
-			monthForegroundDestination);
+			monthGraphics);
 		
 		// Draw date
 		drawText(
 			Integer.toString(calendar.get(Calendar.DATE)),
 			canvas,
-			dateForeground,
-			dateForegroundDestination);
+			dateGraphics);
 		
 		// Draw day
 		drawText(
 			calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()),
 			canvas,
-			dayForeground,
-			dayForegroundDestination);
+			dayGraphics);
 	}
 	
-	private static void drawText(String text, Canvas canvas, Paint paint, RectF destination) {
-		RectF adjustedDestination = adjustTextSize(paint, destination, text);
+	private static void drawText(String text, Canvas canvas, TextGraphics textGraphics) {
+		RectF adjustedDestination = adjustTextSize(textGraphics, text);
 		
 		canvas.drawText(
 			text,
 			adjustedDestination.centerX(),
 			adjustedDestination.centerY(),
-			paint);
+			textGraphics.paint);
 	}
 	
-	private static RectF adjustTextSize(Paint paint, RectF destination, String text) {
+	private static RectF adjustTextSize(TextGraphics textGraphics, String text) {
 		// Set default text size
 		float defaultTextSize = 100;
-		paint.setTextSize(defaultTextSize);
+		textGraphics.paint.setTextSize(defaultTextSize);
 		
 		// Measure text bounds with default text size
 	    Rect defaultTextSizeBounds = new Rect();
-	    paint.getTextBounds(text, 0, text.length(), defaultTextSizeBounds);
+	    textGraphics.paint.getTextBounds(text, 0, text.length(), defaultTextSizeBounds);
 	    
 	    // Compensate text size to match desired destination but make sure to respect both width and
 	    // height of the destination
 	    float scale = Math.min(
-    		destination.height() / defaultTextSizeBounds.height(),
-    		destination.width() / defaultTextSizeBounds.width());
+	    	textGraphics.destination.height() / defaultTextSizeBounds.height(),
+	    	textGraphics.destination.width() / defaultTextSizeBounds.width());
 	    
-	    paint.setTextSize(scale * defaultTextSize);
+	    textGraphics.paint.setTextSize(scale * defaultTextSize);
 	    
 	    // Measure new text bounds based on compensated text size
 	    Rect newBounds = new Rect();
-	    paint.getTextBounds(text, 0, text.length(), newBounds);
+	    textGraphics.paint.getTextBounds(text, 0, text.length(), newBounds);
 	    
 	    return new RectF(
-	    	destination.left,
-	    	destination.top - newBounds.top,
-	    	destination.right,
-	    	destination.bottom - newBounds.bottom);
-	}
-	
-	private static TextPaint createTextPaint(int color, Boolean isShadowed) {
-		TextPaint textPaint = new TextPaint();
-		textPaint.setColor(color);
-		textPaint.setAntiAlias(true);
-		textPaint.setTextAlign(Align.CENTER);
-		
-		if (isShadowed) {
-			textPaint.setShadowLayer(1, 2, 2, color);	
-		}
-		
-		return textPaint;
+	    	textGraphics.destination.left,
+	    	textGraphics.destination.top - newBounds.top,
+	    	textGraphics.destination.right,
+	    	textGraphics.destination.bottom - newBounds.bottom);
 	}
 	
 	private void trySetDate(String date) {
@@ -199,6 +176,24 @@ public class CalendarView extends View {
 			calendar.setTime(DateUtils.parseDate(date));
 		} catch (DateParseException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private static class TextGraphics {
+		
+		private final TextPaint paint;
+		private final RectF destination;
+		
+		public TextGraphics(int color, Boolean isShadowed) {
+			destination = new RectF();
+			paint = new TextPaint();
+			paint.setColor(color);
+			paint.setAntiAlias(true);
+			paint.setTextAlign(Align.CENTER);
+			
+			if (isShadowed) {
+				paint.setShadowLayer(1, 2, 2, color);	
+			}
 		}
 	}
 }
