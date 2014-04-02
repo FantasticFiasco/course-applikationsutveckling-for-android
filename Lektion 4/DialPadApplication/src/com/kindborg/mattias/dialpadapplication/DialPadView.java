@@ -102,6 +102,79 @@ public class DialPadView extends View {
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Key pressedKey;
+        Key key;
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                // Handle user pressing a key
+                key = getKeyAt(event.getX(), event.getY());
+
+                if (key != null) {
+                    key.isPressed = true;
+                    invalidate();
+                }
+
+                return true;
+
+            case MotionEvent.ACTION_MOVE:
+                // Handle user pressing one key but moving the finger to another
+                // without releasing
+                key = getKeyAt(event.getX(), event.getY());
+                pressedKey = getPressedKey();
+
+                if (key != pressedKey) {
+                    if (pressedKey != null) {
+                        pressedKey.isPressed = false;
+                    }
+
+                    if (key != null) {
+                        key.isPressed = true;
+                    }
+
+                    invalidate();
+                }
+
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                // Handle user releasing key
+                pressedKey = getPressedKey();
+
+                if (pressedKey != null) {
+                    pressedKey.isPressed = false;
+                    invalidate();
+                }
+
+                return true;
+        }
+
+        return false;
+    }
+
+    private Key getKeyAt(float x, float y) {
+        for (Key key : keys) {
+            if (key.keyDestination.contains(x, y)) {
+                return key;
+            }
+        }
+
+        return null;
+    }
+
+    private Key getPressedKey() {
+        for (Key key : keys) {
+            if (key.isPressed) {
+                return key;
+            }
+        }
+
+        return null;
+    }
+
     private Key createKey(
         int row,
         int column,
