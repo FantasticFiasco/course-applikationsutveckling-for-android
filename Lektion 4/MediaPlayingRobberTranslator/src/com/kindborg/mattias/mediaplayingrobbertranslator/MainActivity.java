@@ -1,5 +1,6 @@
 package com.kindborg.mattias.mediaplayingrobbertranslator;
 
+import android.media.*;
 import android.os.*;
 import android.view.*;
 import android.view.animation.*;
@@ -7,6 +8,8 @@ import android.app.*;
 import android.content.*;
 
 public class MainActivity extends Activity {
+	
+	private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,39 @@ public class MainActivity extends Activity {
         finish();
     }
     
-    private Animation getFadeFromRightAnimation(long offset) {
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	
+    	// Create media player
+    	mediaPlayer = MediaPlayer.create(this, R.raw.music);
+    	mediaPlayer.setLooping(true);
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	
+    	mediaPlayer.start();
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	
+    	mediaPlayer.pause();
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	
+    	// Release media player
+    	mediaPlayer.release();
+    	mediaPlayer = null;
+    }
+
+	private Animation getFadeFromRightAnimation(long offset) {
     	Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_from_right);
     	animation.setStartOffset(offset);
     	
