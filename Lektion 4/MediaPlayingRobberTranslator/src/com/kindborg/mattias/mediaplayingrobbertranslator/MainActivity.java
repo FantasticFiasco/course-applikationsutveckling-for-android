@@ -11,6 +11,10 @@ public class MainActivity extends Activity {
 
     private static final String INSTANCESTATE_CURRENTPOSITION = "CURRENTPOSITION";
 
+    private View translateToButton;
+    private View translateFromButton;
+    private View aboutButton;
+    private View quitButton;
     private MediaPlayer mediaPlayer;
     private int currentPosition;
 
@@ -19,11 +23,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set animations
-        findViewById(R.id.translateToButton).setAnimation(getFadeFromRightAnimation(0));
-        findViewById(R.id.translateFromButton).setAnimation(getFadeFromRightAnimation(200));
-        findViewById(R.id.aboutButton).setAnimation(getFadeFromRightAnimation(400));
-        findViewById(R.id.quitButton).setAnimation(getFadeFromRightAnimation(600));
+        translateToButton = findViewById(R.id.translateToButton);
+        translateFromButton = findViewById(R.id.translateFromButton);
+        aboutButton = findViewById(R.id.aboutButton);
+        quitButton = findViewById(R.id.quitButton);
     }
 
     public void onTranslateTo(View view) {
@@ -54,6 +57,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        
+        // Start animations
+        translateToButton.startAnimation(getFadeFromRightAnimation(0));
+        translateFromButton.startAnimation(getFadeFromRightAnimation(200));
+        aboutButton.startAnimation(getFadeFromRightAnimation(400));
+        quitButton.startAnimation(getFadeFromRightAnimation(600));
 
         // Create media player
         mediaPlayer = MediaPlayer.create(this, R.raw.music);
