@@ -21,6 +21,9 @@ public class DialPadView extends View {
     public DialPadView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        // Make sure view can take focus and thus receive keyboard events
+        setFocusable(true);
+
         // Create all keys
         keys = new ArrayList<Key>();
         keys.add(createKey(0, 0, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed));
@@ -152,7 +155,94 @@ public class DialPadView extends View {
                 return true;
         }
 
-        return false;
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean isHandled = false;
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_1:
+                keys.get(0).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_2:
+                keys.get(1).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_3:
+                keys.get(2).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_4:
+                keys.get(3).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_5:
+                keys.get(4).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_6:
+                keys.get(5).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_7:
+                keys.get(6).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_8:
+                keys.get(7).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_9:
+                keys.get(8).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_STAR:
+                keys.get(9).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_0:
+                keys.get(10).isPressed = true;
+                isHandled = true;
+                break;
+
+            case KeyEvent.KEYCODE_POUND:
+                keys.get(11).isPressed = true;
+                isHandled = true;
+                break;
+        }
+
+        if (isHandled) {
+            invalidate();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Key pressedKey = getPressedKey();
+
+        if (pressedKey != null) {
+            pressedKey.isPressed = false;
+            invalidate();
+            return true;
+        }
+
+        return super.onKeyUp(keyCode, event);
     }
 
     private Key getKeyAt(float x, float y) {
