@@ -148,72 +148,59 @@ public class DialPadView extends View {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        boolean isHandled = false;
         int keyIndex = -1;
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_1:
                 keyIndex = 0;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_2:
                 keyIndex = 1;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_3:
                 keyIndex = 2;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_4:
                 keyIndex = 3;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_5:
                 keyIndex = 4;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_6:
                 keyIndex = 5;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_7:
                 keyIndex = 6;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_8:
                 keyIndex = 7;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_9:
                 keyIndex = 8;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_STAR:
                 keyIndex = 9;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_0:
                 keyIndex = 10;
-                isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_POUND:
                 keyIndex = 11;
-                isHandled = true;
                 break;
         }
 
-        if (isHandled) {
+        if (keyIndex != -1) {
             trySetKeyState(keys.get(keyIndex), true);
             invalidate();
             return true;
