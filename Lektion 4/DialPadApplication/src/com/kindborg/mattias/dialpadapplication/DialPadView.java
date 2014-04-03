@@ -107,52 +107,40 @@ public class DialPadView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Key pressedKey;
-        Key key;
+        boolean isHandled = false;
 
         switch (event.getAction()) {
-
             case MotionEvent.ACTION_DOWN:
                 // Handle user pressing a key
-                key = getKeyAt(event.getX(), event.getY());
-
-                if (key != null) {
-                    key.isPressed = true;
-                    invalidate();
+                if (trySetKeyState(getKeyAt(event.getX(), event.getY()), true)) {
+                    isHandled = true;
                 }
-
-                return true;
+                break;
 
             case MotionEvent.ACTION_MOVE:
                 // Handle user pressing one key but moving the finger to another
                 // without releasing
-                key = getKeyAt(event.getX(), event.getY());
-                pressedKey = getPressedKey();
+                Key key = getKeyAt(event.getX(), event.getY());
+                Key pressedKey = getPressedKey();
 
                 if (key != pressedKey) {
-                    if (pressedKey != null) {
-                        pressedKey.isPressed = false;
-                    }
-
-                    if (key != null) {
-                        key.isPressed = true;
-                    }
-
-                    invalidate();
+                    trySetKeyState(pressedKey, false);
+                    trySetKeyState(key, true);
+                    isHandled = true;
                 }
-
-                return true;
+                break;
 
             case MotionEvent.ACTION_UP:
                 // Handle user releasing key
-                pressedKey = getPressedKey();
-
-                if (pressedKey != null) {
-                    pressedKey.isPressed = false;
-                    invalidate();
+                if (trySetKeyState(getPressedKey(), false)) {
+                    isHandled = true;
                 }
+                break;
+        }
 
-                return true;
+        if (isHandled) {
+            invalidate();
+            return true;
         }
 
         return super.onTouchEvent(event);
@@ -161,70 +149,72 @@ public class DialPadView extends View {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean isHandled = false;
+        int keyIndex = -1;
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_1:
-                keys.get(0).isPressed = true;
+                keyIndex = 0;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_2:
-                keys.get(1).isPressed = true;
+                keyIndex = 1;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_3:
-                keys.get(2).isPressed = true;
+                keyIndex = 2;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_4:
-                keys.get(3).isPressed = true;
+                keyIndex = 3;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_5:
-                keys.get(4).isPressed = true;
+                keyIndex = 4;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_6:
-                keys.get(5).isPressed = true;
+                keyIndex = 5;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_7:
-                keys.get(6).isPressed = true;
+                keyIndex = 6;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_8:
-                keys.get(7).isPressed = true;
+                keyIndex = 7;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_9:
-                keys.get(8).isPressed = true;
+                keyIndex = 8;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_STAR:
-                keys.get(9).isPressed = true;
+                keyIndex = 9;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_0:
-                keys.get(10).isPressed = true;
+                keyIndex = 10;
                 isHandled = true;
                 break;
 
             case KeyEvent.KEYCODE_POUND:
-                keys.get(11).isPressed = true;
+                keyIndex = 11;
                 isHandled = true;
                 break;
         }
 
         if (isHandled) {
+            trySetKeyState(keys.get(keyIndex), true);
             invalidate();
             return true;
         }
@@ -234,10 +224,7 @@ public class DialPadView extends View {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Key pressedKey = getPressedKey();
-
-        if (pressedKey != null) {
-            pressedKey.isPressed = false;
+        if (trySetKeyState(getPressedKey(), false)) {
             invalidate();
             return true;
         }
@@ -245,6 +232,12 @@ public class DialPadView extends View {
         return super.onKeyUp(keyCode, event);
     }
 
+    /**
+     * Gets key located at specified x- and y-coordinate.
+     * 
+     * @return Key at specified x- and y-coordinate if one exist; otherwise
+     *         null.
+     */
     private Key getKeyAt(float x, float y) {
         for (Key key : keys) {
             if (key.keyDestination.contains(x, y)) {
@@ -255,6 +248,12 @@ public class DialPadView extends View {
         return null;
     }
 
+    /**
+     * Gets first key that is in a pressed state.
+     * 
+     * @return The first key that is in a pressed state if one exist; otherwise
+     *         null.
+     */
     private Key getPressedKey() {
         for (Key key : keys) {
             if (key.isPressed) {
@@ -263,6 +262,21 @@ public class DialPadView extends View {
         }
 
         return null;
+    }
+
+    /**
+     * Tries to set specified pressed state to specified key.
+     * 
+     * @return true if it was possible to set pressed state on key, i.e. key
+     *         wasn't null; otherwise false.
+     */
+    private boolean trySetKeyState(Key key, boolean isPressed) {
+        if (key != null) {
+            key.isPressed = isPressed;
+            return true;
+        }
+
+        return false;
     }
 
     private Key createKey(
