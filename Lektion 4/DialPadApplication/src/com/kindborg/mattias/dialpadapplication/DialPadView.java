@@ -27,7 +27,7 @@ public class DialPadView extends View {
         setFocusable(true);
 
         // Create sound pool
-        soundPool = new SoundPool(12, AudioManager.STREAM_DTMF, 0);
+        soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
         // Create all keys
         keys = new ArrayList<Key>();
