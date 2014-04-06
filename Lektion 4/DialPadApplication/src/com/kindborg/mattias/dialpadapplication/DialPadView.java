@@ -94,52 +94,52 @@ public class DialPadView extends View {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         int keyIndex = -1;
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_1:
+        switch (event.getUnicodeChar()) {
+            case '1':
                 keyIndex = 0;
                 break;
 
-            case KeyEvent.KEYCODE_2:
+            case '2':
                 keyIndex = 1;
                 break;
 
-            case KeyEvent.KEYCODE_3:
+            case '3':
                 keyIndex = 2;
                 break;
 
-            case KeyEvent.KEYCODE_4:
+            case '4':
                 keyIndex = 3;
                 break;
 
-            case KeyEvent.KEYCODE_5:
+            case '5':
                 keyIndex = 4;
                 break;
 
-            case KeyEvent.KEYCODE_6:
+            case '6':
                 keyIndex = 5;
                 break;
 
-            case KeyEvent.KEYCODE_7:
+            case '7':
                 keyIndex = 6;
                 break;
 
-            case KeyEvent.KEYCODE_8:
+            case '8':
                 keyIndex = 7;
                 break;
 
-            case KeyEvent.KEYCODE_9:
+            case '9':
                 keyIndex = 8;
                 break;
 
-            case KeyEvent.KEYCODE_STAR:
+            case '*':
                 keyIndex = 9;
                 break;
 
-            case KeyEvent.KEYCODE_0:
+            case '0':
                 keyIndex = 10;
                 break;
 
-            case KeyEvent.KEYCODE_POUND:
+            case '#':
                 keyIndex = 11;
                 break;
         }
