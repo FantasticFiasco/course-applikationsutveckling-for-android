@@ -6,7 +6,7 @@ import android.view.*;
 
 public class MainActivity extends Activity {
 
-    private static final String INSTANCESTATE_KEYSOUND = "KEYSOUND";
+    private static final String INSTANCESTATE_KEYSOUNDTYPE = "KEYSOUNDTYPE";
 
     private DialPadView dialPadView;
 
@@ -18,8 +18,8 @@ public class MainActivity extends Activity {
         dialPadView = (DialPadView) findViewById(R.id.mainactivity_dialpadview);
 
         // Restore key sound setting
-        if (hasInstanceState(savedInstanceState, INSTANCESTATE_KEYSOUND)) {
-            dialPadView.setKeySound((DialPadView.KeySound) savedInstanceState.getSerializable(INSTANCESTATE_KEYSOUND));
+        if (hasInstanceState(savedInstanceState, INSTANCESTATE_KEYSOUNDTYPE)) {
+            dialPadView.setKeySoundType((DialPadView.KeySoundType) savedInstanceState.getSerializable(INSTANCESTATE_KEYSOUNDTYPE));
         }
     }
 
@@ -28,11 +28,11 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         // Make sure menu items are in sync with DialPadView settings
-        MenuItem selectedKeySoundMenuItem = dialPadView.getKeySound() == DialPadView.KeySound.beep ?
-            menu.findItem(R.id.mainmenu_keysound_beep) :
-            menu.findItem(R.id.mainmenu_keysound_voice);
+        MenuItem selectedKeySoundTypeMenuItem = dialPadView.getKeySoundType() == DialPadView.KeySoundType.beep ?
+            menu.findItem(R.id.mainmenu_keysoundtype_beep) :
+            menu.findItem(R.id.mainmenu_keysoundtype_voice);
 
-        selectedKeySoundMenuItem.setChecked(true);
+        selectedKeySoundTypeMenuItem.setChecked(true);
 
         return true;
     }
@@ -40,13 +40,13 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mainmenu_keysound_beep:
-                dialPadView.setKeySound(DialPadView.KeySound.beep);
+            case R.id.mainmenu_keysoundtype_beep:
+                dialPadView.setKeySoundType(DialPadView.KeySoundType.beep);
                 item.setChecked(true);
                 return true;
 
-            case R.id.mainmenu_keysound_voice:
-                dialPadView.setKeySound(DialPadView.KeySound.voice);
+            case R.id.mainmenu_keysoundtype_voice:
+                dialPadView.setKeySoundType(DialPadView.KeySoundType.voice);
                 item.setChecked(true);
                 return true;
 
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putSerializable(INSTANCESTATE_KEYSOUND, dialPadView.getKeySound());
+        outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
 
     }
 

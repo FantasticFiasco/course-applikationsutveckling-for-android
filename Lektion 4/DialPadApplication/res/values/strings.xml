@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">DialPad Application</string>
-    <string name="keysound_beep">Beep</string>
-    <string name="keysound_voice">Voice</string>
+    <string name="keysoundtype_beep">Beep</string>
+    <string name="keysoundtype_voice">Voice</string>
 
 </resources>
