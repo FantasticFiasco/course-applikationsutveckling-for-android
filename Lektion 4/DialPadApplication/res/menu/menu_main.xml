@@ -3,14 +3,14 @@
     
     <group android:checkableBehavior="single">
         
-        <!-- Beep keysound setting -->
+        <!-- Beep key sound type -->
         <item
-	        android:id="@+id/mainmenu_keysound_beep"
-	        android:title="@string/keysound_beep" />
+	        android:id="@+id/mainmenu_keysoundtype_beep"
+	        android:title="@string/keysoundtype_beep" />
         
-        <!-- Voice keysound setting -->
+        <!-- Voice key sound type -->
         <item
-	        android:id="@+id/mainmenu_keysound_voice"
-	        android:title="@string/keysound_voice" />
+	        android:id="@+id/mainmenu_keysoundtype_voice"
+	        android:title="@string/keysoundtype_voice" />
     </group>
 </menu>
