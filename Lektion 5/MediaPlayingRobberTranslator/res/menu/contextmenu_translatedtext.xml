@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/contextmenu_translatedtext_action_clear"
+        android:title="@string/contextmenu_translatedtext_clear"/>
+
+</menu>
