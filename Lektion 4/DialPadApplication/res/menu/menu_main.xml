@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <group android:checkableBehavior="single">
+        
+        <!-- Beep keysound setting -->
+        <item
+	        android:id="@+id/mainmenu_keysound_beep"
+	        android:title="@string/keysound_beep" />
+        
+        <!-- Voice keysound setting -->
+        <item
+	        android:id="@+id/mainmenu_keysound_voice"
+	        android:title="@string/keysound_voice" />
+    </group>
+</menu>

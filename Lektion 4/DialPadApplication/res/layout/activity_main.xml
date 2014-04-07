@@ -8,6 +8,7 @@
     
     <!-- DialPad -->
     <com.kindborg.mattias.dialpadapplication.DialPadView
+        android:id="@+id/mainactivity_dialpadview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     

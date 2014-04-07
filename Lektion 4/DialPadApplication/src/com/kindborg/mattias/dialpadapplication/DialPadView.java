@@ -20,6 +20,8 @@ public class DialPadView extends View {
     private final Paint normalKeyPaint;
     private final Paint pressedKeyPaint;
 
+    private KeySound keySound = KeySound.voice;
+
     public DialPadView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -47,6 +49,20 @@ public class DialPadView extends View {
         // Create key border paint
         normalKeyPaint = createPaint(50, 50, 50);
         pressedKeyPaint = createPaint(150, 150, 150);
+    }
+
+    /**
+     * Gets the sound played when a key is pressed.
+     */
+    public KeySound getKeySound() {
+        return keySound;
+    }
+
+    /**
+     * Sets the sound played when a key is pressed.
+     */
+    public void setKeySound(KeySound keySound) {
+        this.keySound = keySound;
     }
 
     @Override
@@ -303,6 +319,14 @@ public class DialPadView extends View {
         paint.setARGB(255, r, g, b);
 
         return paint;
+    }
+
+    /*
+     * Enum describing the sound played when a key is pressed.
+     */
+    public static enum KeySound {
+        beep,
+        voice
     }
 
     /**
