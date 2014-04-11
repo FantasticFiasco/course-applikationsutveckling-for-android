@@ -15,7 +15,9 @@ public class DialPadView extends View {
     private static final int KEY_PADDING = 1;
     private static final int ROUNDED_CORNER = 5;
 
-    private final List<Key> keys;
+    //private final Key dialKey;
+    //private final Key backspaceKey;
+    private final List<Key> inputKeys;
     private final Paint normalKeyPaint;
     private final Paint pressedKeyPaint;
 
@@ -28,20 +30,20 @@ public class DialPadView extends View {
         // Make sure view can take focus and thus receive keyboard events
         setFocusable(true);
 
-        // Create all keys
-        keys = new ArrayList<Key>();
-        keys.add(createKey(0, 0, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
-        keys.add(createKey(0, 1, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
-        keys.add(createKey(0, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
-        keys.add(createKey(1, 0, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, R.raw.four, ToneGenerator.TONE_DTMF_4));
-        keys.add(createKey(1, 1, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, R.raw.five, ToneGenerator.TONE_DTMF_5));
-        keys.add(createKey(1, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, R.raw.six, ToneGenerator.TONE_DTMF_6));
-        keys.add(createKey(2, 0, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, R.raw.seven, ToneGenerator.TONE_DTMF_7));
-        keys.add(createKey(2, 1, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, R.raw.eight, ToneGenerator.TONE_DTMF_8));
-        keys.add(createKey(2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, R.raw.nine, ToneGenerator.TONE_DTMF_9));
-        keys.add(createKey(3, 0, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, R.raw.star, ToneGenerator.TONE_DTMF_S));
-        keys.add(createKey(3, 1, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, R.raw.zero, ToneGenerator.TONE_DTMF_0));
-        keys.add(createKey(3, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, R.raw.pound, ToneGenerator.TONE_DTMF_P));
+        // Create all input keys
+        inputKeys = new ArrayList<Key>();
+        inputKeys.add(createKey(0, 1, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
+        inputKeys.add(createKey(0, 0, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
+        inputKeys.add(createKey(0, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
+        inputKeys.add(createKey(1, 0, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, R.raw.four, ToneGenerator.TONE_DTMF_4));
+        inputKeys.add(createKey(1, 1, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, R.raw.five, ToneGenerator.TONE_DTMF_5));
+        inputKeys.add(createKey(1, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, R.raw.six, ToneGenerator.TONE_DTMF_6));
+        inputKeys.add(createKey(2, 0, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, R.raw.seven, ToneGenerator.TONE_DTMF_7));
+        inputKeys.add(createKey(2, 1, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, R.raw.eight, ToneGenerator.TONE_DTMF_8));
+        inputKeys.add(createKey(2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, R.raw.nine, ToneGenerator.TONE_DTMF_9));
+        inputKeys.add(createKey(3, 0, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, R.raw.star, ToneGenerator.TONE_DTMF_S));
+        inputKeys.add(createKey(3, 1, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, R.raw.zero, ToneGenerator.TONE_DTMF_0));
+        inputKeys.add(createKey(3, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, R.raw.pound, ToneGenerator.TONE_DTMF_P));
 
         // Create key border paint
         normalKeyPaint = createPaint(50, 50, 50);
@@ -73,7 +75,7 @@ public class DialPadView extends View {
                 break;
 
             case voice:
-                keySound = new VoiceKeySound(getContext(), keys);
+                keySound = new VoiceKeySound(getContext(), inputKeys);
                 break;
 
             default:
@@ -181,7 +183,7 @@ public class DialPadView extends View {
         }
 
         if (keyIndex != -1) {
-            trySetKeyState(keys.get(keyIndex), true);
+            trySetKeyState(inputKeys.get(keyIndex), true);
             invalidate();
             return true;
         }
@@ -215,23 +217,23 @@ public class DialPadView extends View {
         float x;
         float y;
 
-        // Update key destinations
-        for (Key key : keys) {
+        // Update input key destinations
+        for (Key inputKey : inputKeys) {
             // Update key destination
-            x = KEY_PADDING + key.column * horizontalOffset;
-            y = KEY_PADDING + key.row * verticalOffset;
+            x = KEY_PADDING + inputKey.column * horizontalOffset;
+            y = KEY_PADDING + inputKey.row * verticalOffset;
 
-            key.keyDestination.set(
+            inputKey.keyDestination.set(
                 x,
                 y,
                 x + keyWidth,
                 y + keyHeight);
 
             // Update key content destination
-            x = key.keyDestination.centerX() - keyContentSize / 2;
-            y = key.keyDestination.centerY() - keyContentSize / 2;
+            x = inputKey.keyDestination.centerX() - keyContentSize / 2;
+            y = inputKey.keyDestination.centerY() - keyContentSize / 2;
 
-            key.keyContentDestination.set(
+            inputKey.keyContentDestination.set(
                 x,
                 y,
                 x + keyContentSize,
@@ -243,19 +245,19 @@ public class DialPadView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        for (Key key : keys) {
+        for (Key inputKey : inputKeys) {
             // Draw key
             canvas.drawRoundRect(
-                key.keyDestination,
+                inputKey.keyDestination,
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
-                key.isPressed ? pressedKeyPaint : normalKeyPaint);
+                inputKey.isPressed ? pressedKeyPaint : normalKeyPaint);
 
             // Draw key content
             canvas.drawBitmap(
-                key.isPressed ? key.pressedKey : key.normalKey,
+                inputKey.isPressed ? inputKey.pressedKey : inputKey.normalKey,
                 null,
-                key.keyContentDestination,
+                inputKey.keyContentDestination,
                 null);
         }
     }
@@ -274,9 +276,9 @@ public class DialPadView extends View {
      *         null.
      */
     private Key getKeyAt(float x, float y) {
-        for (Key key : keys) {
-            if (key.keyDestination.contains(x, y)) {
-                return key;
+        for (Key inputKey : inputKeys) {
+            if (inputKey.keyDestination.contains(x, y)) {
+                return inputKey;
             }
         }
 
@@ -290,9 +292,9 @@ public class DialPadView extends View {
      *         null.
      */
     private Key getPressedKey() {
-        for (Key key : keys) {
-            if (key.isPressed) {
-                return key;
+        for (Key inputKey : inputKeys) {
+            if (inputKey.isPressed) {
+                return inputKey;
             }
         }
 
