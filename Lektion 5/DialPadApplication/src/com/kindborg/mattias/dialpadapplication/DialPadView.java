@@ -20,6 +20,7 @@ public class DialPadView extends View {
     private final Paint pressedKeyPaint;
 
     private IKeySound keySound;
+    private IOnDialNumberListener onDialNumberListener;
 
     public DialPadView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -78,6 +79,10 @@ public class DialPadView extends View {
             default:
                 throw new RuntimeException("Unsupported key sound type: " + keySoundType);
         }
+    }
+    
+    public void setOnDialNumberListener(IOnDialNumberListener onDialNumberListener) {
+        this.onDialNumberListener = onDialNumberListener;
     }
 
     @Override
@@ -346,6 +351,17 @@ public class DialPadView extends View {
     public static enum KeySoundType {
         beep,
         voice
+    }
+    
+    /**
+     * Interface acting as listener for when a telephone number is dialed.
+     */
+    public interface IOnDialNumberListener {
+    	
+        /**
+         * Called when a telephone number is dialed.
+         */
+        void onDialNumber(String telephoneNumber);
     }
 
     /**
