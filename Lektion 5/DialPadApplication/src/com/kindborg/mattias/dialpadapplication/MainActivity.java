@@ -1,10 +1,12 @@
 package com.kindborg.mattias.dialpadapplication;
 
 import android.app.*;
+import android.content.*;
+import android.net.Uri;
 import android.os.*;
 import android.view.*;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements DialPadView.IOnDialNumberListener {
 
     private static final String INSTANCESTATE_KEYSOUNDTYPE = "KEYSOUNDTYPE";
 
@@ -16,11 +18,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         dialPadView = (DialPadView) findViewById(R.id.mainactivity_dialpadview);
+        dialPadView.setOnDialNumberListener(this);
 
         // Restore key sound setting
         if (hasInstanceState(savedInstanceState, INSTANCESTATE_KEYSOUNDTYPE)) {
             dialPadView.setKeySoundType((DialPadView.KeySoundType) savedInstanceState.getSerializable(INSTANCESTATE_KEYSOUNDTYPE));
         }
+    }
+    
+    @Override
+    public void onDialNumber(String telephoneNumber) {
+        // Create intent opening the phone dialer
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + telephoneNumber));
+        startActivity(intent);
     }
 
     @Override
