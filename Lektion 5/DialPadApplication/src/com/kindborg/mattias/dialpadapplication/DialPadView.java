@@ -16,11 +16,14 @@ public class DialPadView extends View {
     private static final int ROUNDED_CORNER = 5;
 
     private final List<Key> keys;
-    private final Paint normalKeyPaint;
-    private final Paint pressedKeyPaint;
+    private final Paint normalKeyForegroundPaint;
+    private final Paint normalKeyBackgroundPaint;
+    private final Paint pressedKeyBackgroundPaint;
 
     private IKeySound keySound;
     private IOnDialNumberListener onDialNumberListener;
+    private StringBuilder numberBuilder;
+    private RectF numberDestination;
 
     public DialPadView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,27 +33,34 @@ public class DialPadView extends View {
 
         // Create all keys
         keys = new ArrayList<Key>();
-        keys.add(createKey('\0', 0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
-        keys.add(createKey('\0', 0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
-        keys.add(createKey('1', 1, 0, 2, 2, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
-        keys.add(createKey('2', 1, 2, 2, 2,  R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
-        keys.add(createKey('3', 1, 4, 2, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
-        keys.add(createKey('4', 3, 0, 2, 2, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, R.raw.four, ToneGenerator.TONE_DTMF_4));
-        keys.add(createKey('5', 3, 2, 2, 2, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, R.raw.five, ToneGenerator.TONE_DTMF_5));
-        keys.add(createKey('6', 3, 4, 2, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, R.raw.six, ToneGenerator.TONE_DTMF_6));
-        keys.add(createKey('7', 5, 0, 2, 2, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, R.raw.seven, ToneGenerator.TONE_DTMF_7));
-        keys.add(createKey('8', 5, 2, 2, 2, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, R.raw.eight, ToneGenerator.TONE_DTMF_8));
-        keys.add(createKey('9', 5, 4, 2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, R.raw.nine, ToneGenerator.TONE_DTMF_9));
-        keys.add(createKey('*', 7, 0, 2, 2, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, R.raw.star, ToneGenerator.TONE_DTMF_S));
-        keys.add(createKey('0', 7, 2, 2, 2, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, R.raw.zero, ToneGenerator.TONE_DTMF_0));
-        keys.add(createKey('#', 7, 4, 2, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, R.raw.pound, ToneGenerator.TONE_DTMF_P));
+        keys.add(new BackspaceKey('\0', 0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
+        keys.add(new PhoneKey('\0', 0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
+        keys.add(new Key('1', 1, 0, 2, 2, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
+        keys.add(new Key('2', 1, 2, 2, 2, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
+        keys.add(new Key('3', 1, 4, 2, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
+        keys.add(new Key('4', 3, 0, 2, 2, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, R.raw.four, ToneGenerator.TONE_DTMF_4));
+        keys.add(new Key('5', 3, 2, 2, 2, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, R.raw.five, ToneGenerator.TONE_DTMF_5));
+        keys.add(new Key('6', 3, 4, 2, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, R.raw.six, ToneGenerator.TONE_DTMF_6));
+        keys.add(new Key('7', 5, 0, 2, 2, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, R.raw.seven, ToneGenerator.TONE_DTMF_7));
+        keys.add(new Key('8', 5, 2, 2, 2, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, R.raw.eight, ToneGenerator.TONE_DTMF_8));
+        keys.add(new Key('9', 5, 4, 2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, R.raw.nine, ToneGenerator.TONE_DTMF_9));
+        keys.add(new Key('*', 7, 0, 2, 2, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, R.raw.star, ToneGenerator.TONE_DTMF_S));
+        keys.add(new Key('0', 7, 2, 2, 2, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, R.raw.zero, ToneGenerator.TONE_DTMF_0));
+        keys.add(new Key('#', 7, 4, 2, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, R.raw.pound, ToneGenerator.TONE_DTMF_P));
 
-        // Create key border paint
-        normalKeyPaint = createPaint(50, 50, 50);
-        pressedKeyPaint = createPaint(150, 150, 150);
+        // Create rect where number should be drawn
+        numberDestination = new RectF();
+
+        // Create paints
+        normalKeyForegroundPaint = createPaint(51, 181, 229);
+        normalKeyBackgroundPaint = createPaint(50, 50, 50);
+        pressedKeyBackgroundPaint = createPaint(150, 150, 150);
 
         // Create default key sound type
         setKeySoundType(KeySoundType.beep);
+
+        // Create number builder
+        numberBuilder = new StringBuilder();
     }
 
     /**
@@ -82,7 +92,7 @@ public class DialPadView extends View {
                 throw new RuntimeException("Unsupported key sound type: " + keySoundType);
         }
     }
-    
+
     public void setOnDialNumberListener(IOnDialNumberListener onDialNumberListener) {
         this.onDialNumberListener = onDialNumberListener;
     }
@@ -131,12 +141,12 @@ public class DialPadView extends View {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Key pressedKey = null;
-        
+
         for (Key key : keys) {
-        	if (key.key == event.getUnicodeChar()) {
-        		pressedKey = key;
-        		break;
-        	}
+            if (key.key == event.getUnicodeChar()) {
+                pressedKey = key;
+                break;
+            }
         }
 
         if (pressedKey != null) {
@@ -164,7 +174,7 @@ public class DialPadView extends View {
 
         float verticalOffset = h / ROWS;
         float horizontalOffset = w / COLUMNS;
-        
+
         // The size of a key content needs to be square since all bitmaps are
         // square
         float cellContentSize = Math.min(verticalOffset, horizontalOffset);
@@ -173,6 +183,7 @@ public class DialPadView extends View {
         float top;
         float right;
         float bottom;
+        StringBuilder possibleKeys = new StringBuilder();
 
         // Update key destinations
         for (Key key : keys) {
@@ -181,7 +192,7 @@ public class DialPadView extends View {
             top = KEY_PADDING + key.row * verticalOffset;
             right = (key.column + key.columnSpan) * horizontalOffset - KEY_PADDING;
             bottom = (key.row + key.rowSpan) * verticalOffset - KEY_PADDING;
-            
+
             key.keyDestination.set(left, top, right, bottom);
 
             // Update key content destination
@@ -189,18 +200,33 @@ public class DialPadView extends View {
             top = key.keyDestination.centerY() - key.rowSpan * cellContentSize / 2;
             right = left + key.columnSpan * cellContentSize;
             bottom = top + key.rowSpan * cellContentSize;
-            
+
             key.keyContentDestination.set(
                 left,
                 top,
                 right,
                 bottom);
+
+            possibleKeys.append(key.key);
         }
+
+        // Update number size
+        int numberKeyPadding = 6 * KEY_PADDING;
+        left = numberKeyPadding;
+        top = numberKeyPadding;
+        right = 4 * horizontalOffset - numberKeyPadding;
+        bottom = verticalOffset - numberKeyPadding;
+
+        numberDestination.set(left, top, right, bottom);
+        numberDestination = adjustTextSize(normalKeyForegroundPaint, numberDestination, possibleKeys.toString());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        // Draw number
+        canvas.drawText(numberBuilder.toString(), numberDestination.left, numberDestination.top, normalKeyForegroundPaint);
 
         for (Key key : keys) {
             // Draw key
@@ -208,7 +234,7 @@ public class DialPadView extends View {
                 key.keyDestination,
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
-                key.isPressed ? pressedKeyPaint : normalKeyPaint);
+                key.isPressed ? pressedKeyBackgroundPaint : normalKeyBackgroundPaint);
 
             // Draw key content
             canvas.drawBitmap(
@@ -269,9 +295,9 @@ public class DialPadView extends View {
             key.isPressed = isPressed;
 
             if (isPressed) {
+                key.onKeyPressed();
                 keySound.play(key);
-            }
-            else {
+            } else {
                 keySound.stop();
             }
 
@@ -281,26 +307,26 @@ public class DialPadView extends View {
         return false;
     }
 
-    private Key createKey(
-    	char key,
-        int row,
-        int column,
-        int rowSpan,
-        int columnSpan,
-        int normalButtonResourceId,
-        int pressedButtonResourceId,
-        int voiceSoundResourceId,
-        int beepToneType) {
-        return new Key(
-        	key,
-            row,
-            column,
-            rowSpan,
-            columnSpan,
-            BitmapFactory.decodeResource(getResources(), normalButtonResourceId),
-            BitmapFactory.decodeResource(getResources(), pressedButtonResourceId),
-            voiceSoundResourceId,
-            beepToneType);
+    private static RectF adjustTextSize(Paint paint, RectF destination, String text) {
+        // Set default text size
+        float defaultTextSize = 100;
+        paint.setTextSize(defaultTextSize);
+
+        // Measure text bounds with default text size
+        Rect defaultTextSizeBounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), defaultTextSizeBounds);
+        float scale = destination.height() / defaultTextSizeBounds.height();
+
+        paint.setTextSize(scale * defaultTextSize);
+
+        Rect newBounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), newBounds);
+
+        return new RectF(
+            destination.left - newBounds.left,
+            destination.top - newBounds.top,
+            destination.right,
+            destination.bottom - newBounds.bottom);
     }
 
     private static Paint createPaint(int r, int g, int b) {
@@ -317,12 +343,12 @@ public class DialPadView extends View {
         beep,
         voice
     }
-    
+
     /**
      * Interface acting as listener for when a telephone number is dialed.
      */
     public interface IOnDialNumberListener {
-    	
+
         /**
          * Called when a telephone number is dialed.
          */
@@ -332,11 +358,11 @@ public class DialPadView extends View {
     /**
      * Class representing a key on the dial pad.
      */
-    private static class Key {
+    private class Key {
 
-    	public static final int SOUNDLESS = -1;
-    	
-    	private final char key;
+        public static final int SOUNDLESS = -1;
+
+        private final char key;
         private final int row;
         private final int column;
         private final int rowSpan;
@@ -352,26 +378,82 @@ public class DialPadView extends View {
         private boolean isPressed;
 
         public Key(
-        	char key,
+            char key,
             int row,
             int column,
             int rowSpan,
             int columnSpan,
-            Bitmap normalKey,
-            Bitmap pressedKey,
+            int normalButtonResourceId,
+            int pressedButtonResourceId,
             int voiceSoundResourceId,
             int beepToneType) {
-        	this.key = key;
+            this.key = key;
             this.row = row;
             this.column = column;
             this.rowSpan = rowSpan;
             this.columnSpan = columnSpan;
-            this.normalKey = normalKey;
-            this.pressedKey = pressedKey;
+            this.normalKey = BitmapFactory.decodeResource(getResources(), normalButtonResourceId);
+            this.pressedKey = BitmapFactory.decodeResource(getResources(), pressedButtonResourceId);
             this.voiceSoundResourceId = voiceSoundResourceId;
             this.beepToneType = beepToneType;
             keyDestination = new RectF();
             keyContentDestination = new RectF();
+        }
+
+        public void onKeyPressed() {
+            numberBuilder.append(key);
+        }
+    }
+
+    /*
+     * Class representing a the phone key on the dial pad.
+     */
+    public class PhoneKey extends Key {
+
+        public PhoneKey(
+            char key,
+            int row,
+            int column,
+            int rowSpan,
+            int columnSpan,
+            int normalButtonResourceId,
+            int pressedButtonResourceId,
+            int voiceSoundResourceId,
+            int beepToneType) {
+            super(key, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+        }
+
+        @Override
+        public void onKeyPressed() {
+            if (onDialNumberListener != null) {
+                onDialNumberListener.onDialNumber(numberBuilder.toString());
+            }
+        }
+    }
+
+    /*
+     * Class representing a the backspace key on the dial pad.
+     */
+    public class BackspaceKey extends Key {
+
+        public BackspaceKey(
+            char key,
+            int row,
+            int column,
+            int rowSpan,
+            int columnSpan,
+            int normalButtonResourceId,
+            int pressedButtonResourceId,
+            int voiceSoundResourceId,
+            int beepToneType) {
+            super(key, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+        }
+
+        @Override
+        public void onKeyPressed() {
+            if (numberBuilder.length() > 0) {
+                numberBuilder.deleteCharAt(numberBuilder.length() - 1);
+            }
         }
     }
 
@@ -414,9 +496,9 @@ public class DialPadView extends View {
 
             // Load the sounds for all keys
             for (Key key : keys) {
-            	if (key.voiceSoundResourceId != Key.SOUNDLESS) {
-            		key.voiceSoundId = soundPool.load(context, key.voiceSoundResourceId, 1);
-            	}
+                if (key.voiceSoundResourceId != Key.SOUNDLESS) {
+                    key.voiceSoundId = soundPool.load(context, key.voiceSoundResourceId, 1);
+                }
             }
         }
 
