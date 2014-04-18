@@ -9,6 +9,7 @@ import android.view.*;
 public class MainActivity extends Activity implements DialPadView.IOnDialNumberListener {
 
     private static final String INSTANCESTATE_KEYSOUNDTYPE = "KEYSOUNDTYPE";
+    private static final String INSTANCESTATE_NUMBER = "NUMBER";
 
     private DialPadView dialPadView;
 
@@ -20,12 +21,15 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
         dialPadView = (DialPadView) findViewById(R.id.mainactivity_dialpadview);
         dialPadView.setOnDialNumberListener(this);
 
-        // Restore key sound setting
+        // Restore instance state
         if (hasInstanceState(savedInstanceState, INSTANCESTATE_KEYSOUNDTYPE)) {
             dialPadView.setKeySoundType((DialPadView.KeySoundType) savedInstanceState.getSerializable(INSTANCESTATE_KEYSOUNDTYPE));
         }
+        if (hasInstanceState(savedInstanceState, INSTANCESTATE_NUMBER)) {
+            dialPadView.setNumber(savedInstanceState.getString(INSTANCESTATE_NUMBER));
+        }
     }
-    
+
     @Override
     public void onDialNumber(String telephoneNumber) {
         // Create intent opening the phone dialer
@@ -70,7 +74,7 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
         super.onSaveInstanceState(outState);
 
         outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
-
+        outState.putString(INSTANCESTATE_NUMBER, dialPadView.getNumber());
     }
 
     /**

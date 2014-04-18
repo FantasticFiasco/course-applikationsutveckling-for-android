@@ -93,6 +93,21 @@ public class DialPadView extends View {
         }
     }
 
+    /**
+     * Gets the number displayed.
+     */
+    public String getNumber() {
+        return numberBuilder.toString();
+    }
+
+    /**
+     * Sets the number displayed.
+     */
+    public void setNumber(String number) {
+        numberBuilder.setLength(0);
+        numberBuilder.append(number);
+    }
+
     public void setOnDialNumberListener(IOnDialNumberListener onDialNumberListener) {
         this.onDialNumberListener = onDialNumberListener;
     }
