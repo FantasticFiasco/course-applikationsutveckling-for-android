@@ -243,7 +243,8 @@ public class DialPadView extends View {
         super.onDraw(canvas);
 
         // Draw number
-        canvas.drawText(numberBuilder.toString(), numberDestination.left, numberDestination.top, normalKeyForegroundPaint);
+        String number = adjustText(numberBuilder.toString(), normalKeyForegroundPaint, numberDestination);
+        canvas.drawText(number, numberDestination.left, numberDestination.top, normalKeyForegroundPaint);
 
         for (Key key : keys) {
             // Draw key
@@ -344,6 +345,26 @@ public class DialPadView extends View {
             destination.top - newBounds.top,
             destination.right,
             destination.bottom - newBounds.bottom);
+    }
+
+    private static String adjustText(String text, Paint paint, RectF destination) {
+        if (paint.measureText(text) <= destination.width()) {
+            return text;
+        }
+
+        // Number does not fit, lets trim it
+        String adjustedText = "";
+        String prefix = "...";
+
+        for (int index = 1; index < text.length(); index++) {
+            adjustedText = prefix + text.substring(index, text.length());
+
+            if (paint.measureText(adjustedText) <= destination.width()) {
+                break;
+            }
+        }
+
+        return adjustedText;
     }
 
     private static Paint createPaint(int r, int g, int b) {
