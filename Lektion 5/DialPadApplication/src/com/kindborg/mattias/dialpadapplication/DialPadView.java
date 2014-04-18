@@ -106,6 +106,8 @@ public class DialPadView extends View {
     public void setNumber(String number) {
         numberBuilder.setLength(0);
         numberBuilder.append(number);
+
+        invalidate();
     }
 
     public void setOnDialNumberListener(IOnDialNumberListener onDialNumberListener) {
