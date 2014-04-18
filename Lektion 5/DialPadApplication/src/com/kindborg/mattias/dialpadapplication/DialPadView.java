@@ -8,7 +8,7 @@ import android.media.*;
 import android.util.*;
 import android.view.*;
 
-public class DialPadView extends View {
+public class DialPadView extends View implements View.OnLongClickListener {
 
     private static final int ROWS = 9;
     private static final int COLUMNS = 6;
@@ -30,6 +30,10 @@ public class DialPadView extends View {
 
         // Make sure view can take focus and thus receive keyboard events
         setFocusable(true);
+
+        // Make sure view can receive long clicks
+        setLongClickable(true);
+        setOnLongClickListener(this);
 
         // Create all keys
         keys = new ArrayList<Key>();
@@ -149,7 +153,6 @@ public class DialPadView extends View {
 
         if (isHandled) {
             invalidate();
-            return true;
         }
 
         return super.onTouchEvent(event);
@@ -183,6 +186,16 @@ public class DialPadView extends View {
         }
 
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (getPressedKey() instanceof BackspaceKey) {
+            setNumber("");
+            return true;
+        }
+
+        return false;
     }
 
     @Override
