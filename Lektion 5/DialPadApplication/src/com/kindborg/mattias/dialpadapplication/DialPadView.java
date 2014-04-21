@@ -160,6 +160,9 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO: Key events are not received due to actionbar
+        // TODO: Handle backspace
+
         Key pressedKey = null;
 
         for (Key key : keys) {
