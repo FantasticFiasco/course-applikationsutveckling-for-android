@@ -34,7 +34,10 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
     public void onDialNumber(String telephoneNumber) {
         // Create intent opening the phone dialer
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(telephoneNumber)));
-        startActivity(intent);
+
+        if (IntentExtensions.isIntentAvailable(this, intent)) {
+            startActivity(intent);
+        }
     }
 
     @Override
