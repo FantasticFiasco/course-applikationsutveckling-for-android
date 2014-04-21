@@ -30,6 +30,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         // Make sure view can take focus and thus receive keyboard events
         setFocusable(true);
+        setFocusableInTouchMode(true);
 
         // Make sure view can receive long clicks
         setLongClickable(true);
