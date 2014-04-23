@@ -38,8 +38,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         // Create all keys
         keys = new ArrayList<Key>();
-        keys.add(new BackspaceKey('\0', 0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
-        keys.add(new PhoneKey('\0', 0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
+        keys.add(new BackspaceKey(0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
+        keys.add(new PhoneKey(0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
         keys.add(new Key('1', 1, 0, 2, 2, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
         keys.add(new Key('2', 1, 2, 2, 2, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
         keys.add(new Key('3', 1, 4, 2, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
@@ -358,7 +358,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
         paint.getTextBounds(text, 0, text.length(), newBounds);
 
         return new RectF(
-            destination.left - newBounds.left,
+            destination.left,
             destination.top - newBounds.top,
             destination.right,
             destination.bottom - newBounds.bottom);
@@ -466,7 +466,6 @@ public class DialPadView extends View implements View.OnLongClickListener {
     public class PhoneKey extends Key {
 
         public PhoneKey(
-            char key,
             int row,
             int column,
             int rowSpan,
@@ -475,7 +474,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int pressedButtonResourceId,
             int voiceSoundResourceId,
             int beepToneType) {
-            super(key, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
         }
 
         @Override
@@ -492,7 +491,6 @@ public class DialPadView extends View implements View.OnLongClickListener {
     public class BackspaceKey extends Key {
 
         public BackspaceKey(
-            char key,
             int row,
             int column,
             int rowSpan,
@@ -501,7 +499,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int pressedButtonResourceId,
             int voiceSoundResourceId,
             int beepToneType) {
-            super(key, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
         }
 
         @Override
