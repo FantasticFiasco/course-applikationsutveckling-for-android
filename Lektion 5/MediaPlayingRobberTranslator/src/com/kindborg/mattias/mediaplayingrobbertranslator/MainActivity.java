@@ -9,10 +9,10 @@ import android.preference.*;
 import android.view.*;
 import android.view.animation.*;
 
-public class MainActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class MainActivity extends ActivityBase implements OnSharedPreferenceChangeListener {
 
     private static final String INSTANCESTATE_CURRENTPOSITION = "CURRENTPOSITION";
-    private static final String PREFERENCE_PLAYMUSIC = "PREFERENCE_PLAYMUSIC";
+    private static final String PREFERENCE_PLAYMUSIC = "preference_playmusic";
 
     private View translateToButton;
     private View translateFromButton;
@@ -186,8 +186,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
     }
 
     private boolean getIsPlayingMusic() {
-        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(PREFERENCE_PLAYMUSIC, true);
+        return getPreferences(MainActivity.class).getBoolean(PREFERENCE_PLAYMUSIC, true);
     }
 
     /**
