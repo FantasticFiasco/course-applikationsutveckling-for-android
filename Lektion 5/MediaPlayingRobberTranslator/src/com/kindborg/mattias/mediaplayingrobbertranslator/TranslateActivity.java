@@ -57,6 +57,12 @@ public class TranslateActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_translate, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -68,6 +74,10 @@ public class TranslateActivity extends Activity {
                 // http://developer.android.com/design/patterns/navigation.html#up-vs-back
                 //
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            case R.id.menu_translate_clear:
+                clearTranslatedText();
                 return true;
         }
 
@@ -85,12 +95,11 @@ public class TranslateActivity extends Activity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.contextmenu_translatedtext_action_clear:
-                translatedText.setText("");
+                clearTranslatedText();
                 return true;
-
-            default:
-                return super.onContextItemSelected(item);
         }
+
+        return super.onContextItemSelected(item);
     }
 
     public void onTranslate(View view) {
@@ -108,12 +117,20 @@ public class TranslateActivity extends Activity {
         translatedTextScrollView.fullScroll(View.FOCUS_DOWN);
 
         // Clear input
-        textToTranslate.setText("");
+        clearText();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putCharSequence(INSTANCESTATE_TRANSLATEDTEXT, translatedText.getText());
+    }
+
+    private void clearText() {
+        textToTranslate.setText("");
+    }
+
+    private void clearTranslatedText() {
+        translatedText.setText("");
     }
 
     /**
