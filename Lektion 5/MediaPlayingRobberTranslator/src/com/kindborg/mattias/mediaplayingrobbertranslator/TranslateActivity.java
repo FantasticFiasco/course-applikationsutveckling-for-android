@@ -1,20 +1,21 @@
 package com.kindborg.mattias.mediaplayingrobbertranslator;
 
-import com.kindborg.mattias.mediaplayingrobbertranslator.translator.Translator;
+import com.kindborg.mattias.mediaplayingrobbertranslator.translator.*;
 
 import android.os.*;
-import android.app.*;
 import android.view.*;
 import android.view.ContextMenu.*;
 import android.widget.*;
 import android.support.v4.app.*;
 import android.text.*;
 import android.annotation.*;
+import android.content.SharedPreferences.*;
 
-public class TranslateActivity extends Activity {
+public class TranslateActivity extends ActivityBase {
 
     public static final String EXTRA_ISTRANSLATINGTOROBBER = "com.kindborg.mattias.robbertranslator.TranslateActivity.EXTRA_ISTRANSLATINGTOROBBER";
-    private static final String INSTANCESTATE_TRANSLATEDTEXT = "com.kindborg.mattias.robbertranslator.TranslateActivity.INSTANCESTATE_TRANSLATEDTEXT";
+    private static final String PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE = "preference_texttranslatedtorobberlanguage";
+    private static final String PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE = "preference_texttranslatedfromrobberlanguage";
 
     private EditText textToTranslate;
     private TextView translatedText;
@@ -50,10 +51,8 @@ public class TranslateActivity extends Activity {
         TextView inputDescription = (TextView) findViewById(R.id.translateactivity_inputdescription);
         inputDescription.setText(isTranslatingToRobber ? R.string.translateactivity_inputdescription_translatetorobber : R.string.translateactivity_inputdescription_translatefromrobber);
 
-        // Restore instance state
-        if (savedInstanceState != null) {
-            translatedText.setText(savedInstanceState.getCharSequence(INSTANCESTATE_TRANSLATEDTEXT));
-        }
+        // Load translated text
+        loadTranslatedText();
     }
 
     @Override
@@ -113,24 +112,44 @@ public class TranslateActivity extends Activity {
         String output = isTranslatingToRobber ? translator.toRobberLanguage(input) : translator.fromRobberLanguage(input);
 
         // Append text and scroll if necessary
-        translatedText.append(output + "\n");
+        setTranslatedText(translatedText.getText() + output + "\n");
         translatedTextScrollView.fullScroll(View.FOCUS_DOWN);
 
         // Clear input
         clearText();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putCharSequence(INSTANCESTATE_TRANSLATEDTEXT, translatedText.getText());
+    private void loadTranslatedText() {
+        String text = isTranslatingToRobber ?
+            getPreferences(TranslateActivity.class).getString(PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE, "") :
+            getPreferences(TranslateActivity.class).getString(PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE, "");
+
+        translatedText.setText(text);
+    }
+
+    private void saveTranslatedText() {
+        String key = isTranslatingToRobber ?
+            PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE :
+            PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE;
+
+        Editor editor = getPreferencesEditor(TranslateActivity.class);
+        editor.putString(key, translatedText.getText().toString());
+        editor.commit();
     }
 
     private void clearText() {
         textToTranslate.setText("");
     }
 
+    private void setTranslatedText(String text) {
+        translatedText.setText(text);
+
+        // Make sure translated text is saved
+        saveTranslatedText();
+    }
+
     private void clearTranslatedText() {
-        translatedText.setText("");
+        setTranslatedText("");
     }
 
     /**
