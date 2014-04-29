@@ -38,20 +38,20 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         // Create all keys
         keys = new ArrayList<Key>();
-        keys.add(new BackspaceKey(0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
-        keys.add(new PhoneKey(0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed, Key.SOUNDLESS, Key.SOUNDLESS));
-        keys.add(new Key('1', 1, 0, 2, 2, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, R.raw.one, ToneGenerator.TONE_DTMF_1));
-        keys.add(new Key('2', 1, 2, 2, 2, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, R.raw.two, ToneGenerator.TONE_DTMF_2));
-        keys.add(new Key('3', 1, 4, 2, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, R.raw.three, ToneGenerator.TONE_DTMF_3));
-        keys.add(new Key('4', 3, 0, 2, 2, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, R.raw.four, ToneGenerator.TONE_DTMF_4));
-        keys.add(new Key('5', 3, 2, 2, 2, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, R.raw.five, ToneGenerator.TONE_DTMF_5));
-        keys.add(new Key('6', 3, 4, 2, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, R.raw.six, ToneGenerator.TONE_DTMF_6));
-        keys.add(new Key('7', 5, 0, 2, 2, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, R.raw.seven, ToneGenerator.TONE_DTMF_7));
-        keys.add(new Key('8', 5, 2, 2, 2, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, R.raw.eight, ToneGenerator.TONE_DTMF_8));
-        keys.add(new Key('9', 5, 4, 2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, R.raw.nine, ToneGenerator.TONE_DTMF_9));
-        keys.add(new Key('*', 7, 0, 2, 2, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, R.raw.star, ToneGenerator.TONE_DTMF_S));
-        keys.add(new Key('0', 7, 2, 2, 2, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, R.raw.zero, ToneGenerator.TONE_DTMF_0));
-        keys.add(new Key('#', 7, 4, 2, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, R.raw.pound, ToneGenerator.TONE_DTMF_P));
+        keys.add(new BackspaceKey(0, 4, 1, 1, R.drawable.dialpad_arrow, R.drawable.dialpad_arrow_pressed));
+        keys.add(new PhoneKey(0, 5, 1, 1, R.drawable.dialpad_call, R.drawable.dialpad_call_pressed));
+        keys.add(new Key('1', 1, 0, 2, 2, R.drawable.dialpad_1, R.drawable.dialpad_1_pressed, "one.mp3", ToneGenerator.TONE_DTMF_1));
+        keys.add(new Key('2', 1, 2, 2, 2, R.drawable.dialpad_2, R.drawable.dialpad_2_pressed, "two.mp3", ToneGenerator.TONE_DTMF_2));
+        keys.add(new Key('3', 1, 4, 2, 2, R.drawable.dialpad_3, R.drawable.dialpad_3_pressed, "three.mp3", ToneGenerator.TONE_DTMF_3));
+        keys.add(new Key('4', 3, 0, 2, 2, R.drawable.dialpad_4, R.drawable.dialpad_4_pressed, "four.mp3", ToneGenerator.TONE_DTMF_4));
+        keys.add(new Key('5', 3, 2, 2, 2, R.drawable.dialpad_5, R.drawable.dialpad_5_pressed, "five.mp3", ToneGenerator.TONE_DTMF_5));
+        keys.add(new Key('6', 3, 4, 2, 2, R.drawable.dialpad_6, R.drawable.dialpad_6_pressed, "six.mp3", ToneGenerator.TONE_DTMF_6));
+        keys.add(new Key('7', 5, 0, 2, 2, R.drawable.dialpad_7, R.drawable.dialpad_7_pressed, "seven.mp3", ToneGenerator.TONE_DTMF_7));
+        keys.add(new Key('8', 5, 2, 2, 2, R.drawable.dialpad_8, R.drawable.dialpad_8_pressed, "eight.mp3", ToneGenerator.TONE_DTMF_8));
+        keys.add(new Key('9', 5, 4, 2, 2, R.drawable.dialpad_9, R.drawable.dialpad_9_pressed, "nine.mp3", ToneGenerator.TONE_DTMF_9));
+        keys.add(new Key('*', 7, 0, 2, 2, R.drawable.dialpad_star, R.drawable.dialpad_star_pressed, "star.mp3", ToneGenerator.TONE_DTMF_S));
+        keys.add(new Key('0', 7, 2, 2, 2, R.drawable.dialpad_0, R.drawable.dialpad_0_pressed, "zero.mp3", ToneGenerator.TONE_DTMF_0));
+        keys.add(new Key('#', 7, 4, 2, 2, R.drawable.dialpad_pound, R.drawable.dialpad_pound_pressed, "pound.mp3", ToneGenerator.TONE_DTMF_P));
 
         // Create rect where number should be drawn
         numberDestination = new RectF();
@@ -161,9 +161,6 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO: Key events are not received due to actionbar
-        // TODO: Handle backspace
-
         Key pressedKey = null;
 
         for (Key key : keys) {
@@ -415,7 +412,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
      */
     private class Key {
 
-        public static final int SOUNDLESS = -1;
+        public static final int SOUNDLESS_TONE = -1;
+        public static final String SOUNDLESS_SOUND = "";
 
         private final char key;
         private final int row;
@@ -424,7 +422,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
         private final int columnSpan;
         private final Bitmap normalKey;
         private final Bitmap pressedKey;
-        private final int voiceSoundResourceId;
+        private final String voiceSoundFileName;
         private final int beepToneType;
         private final RectF keyDestination;
         private final RectF keyContentDestination;
@@ -440,7 +438,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId,
-            int voiceSoundResourceId,
+            String voiceSoundFileName,
             int beepToneType) {
             this.key = key;
             this.row = row;
@@ -449,7 +447,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             this.columnSpan = columnSpan;
             this.normalKey = BitmapFactory.decodeResource(getResources(), normalButtonResourceId);
             this.pressedKey = BitmapFactory.decodeResource(getResources(), pressedButtonResourceId);
-            this.voiceSoundResourceId = voiceSoundResourceId;
+            this.voiceSoundFileName = voiceSoundFileName;
             this.beepToneType = beepToneType;
             keyDestination = new RectF();
             keyContentDestination = new RectF();
@@ -471,10 +469,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int rowSpan,
             int columnSpan,
             int normalButtonResourceId,
-            int pressedButtonResourceId,
-            int voiceSoundResourceId,
-            int beepToneType) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+            int pressedButtonResourceId) {
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.SOUNDLESS_SOUND, Key.SOUNDLESS_TONE);
         }
 
         @Override
@@ -496,10 +492,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int rowSpan,
             int columnSpan,
             int normalButtonResourceId,
-            int pressedButtonResourceId,
-            int voiceSoundResourceId,
-            int beepToneType) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, voiceSoundResourceId, beepToneType);
+            int pressedButtonResourceId) {
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.SOUNDLESS_SOUND, Key.SOUNDLESS_TONE);
         }
 
         @Override
@@ -548,11 +542,12 @@ public class DialPadView extends View implements View.OnLongClickListener {
             soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
             // Load the sounds for all keys
-            for (Key key : keys) {
-                if (key.voiceSoundResourceId != Key.SOUNDLESS) {
-                    key.voiceSoundId = soundPool.load(context, key.voiceSoundResourceId, 1);
-                }
-            }
+            // for (Key key : keys) {
+            // if (key.voiceSoundResourceId != Key.SOUNDLESS) {
+            // key.voiceSoundId = soundPool.load(context,
+            // key.voiceSoundResourceId, 1);
+            // }
+            // }
         }
 
         @Override
