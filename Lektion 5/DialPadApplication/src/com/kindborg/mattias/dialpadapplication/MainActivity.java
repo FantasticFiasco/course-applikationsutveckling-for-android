@@ -5,6 +5,7 @@ import android.content.*;
 import android.net.Uri;
 import android.os.*;
 import android.view.*;
+import android.widget.*;
 
 public class MainActivity extends Activity implements DialPadView.IOnDialNumberListener {
 
@@ -27,6 +28,13 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
         }
         if (hasInstanceState(savedInstanceState, INSTANCESTATE_NUMBER)) {
             dialPadView.setNumber(savedInstanceState.getString(INSTANCESTATE_NUMBER));
+        }
+
+        // Inform user that no SD card exists
+        if (!isExternalStorageReadable()) {
+            Toast
+                .makeText(this, R.string.mainactivity_nosdcard, Toast.LENGTH_SHORT)
+                .show();
         }
     }
 
@@ -78,6 +86,12 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
 
         outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
         outState.putString(INSTANCESTATE_NUMBER, dialPadView.getNumber());
+    }
+
+    private boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED) ||
+            state.equals(Environment.MEDIA_MOUNTED_READ_ONLY);
     }
 
     /**
