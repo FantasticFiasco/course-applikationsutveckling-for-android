@@ -1,10 +1,12 @@
 package com.kindborg.mattias.dialpadapplication;
 
+import java.io.*;
 import java.util.*;
 
 import android.content.*;
 import android.graphics.*;
 import android.media.*;
+import android.os.*;
 import android.util.*;
 import android.view.*;
 
@@ -541,13 +543,17 @@ public class DialPadView extends View implements View.OnLongClickListener {
         public KeySound(Context context, List<Key> keys) {
             soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
+            File sdcard = Environment.getExternalStorageDirectory();
+            File soundDirectory = new File(sdcard, "dialpad/sounds/mamacita_us");
+
             // Load the sounds for all keys
-            // for (Key key : keys) {
-            // if (key.voiceSoundResourceId != Key.SOUNDLESS) {
-            // key.voiceSoundId = soundPool.load(context,
-            // key.voiceSoundResourceId, 1);
-            // }
-            // }
+            for (Key key : keys) {
+                if (key.soundFileName != Key.NO_SOUND) {
+                    key.loadedSoundId = soundPool.load(
+                        soundDirectory.getAbsolutePath() + "/" + key.soundFileName,
+                        1);
+                }
+            }
         }
 
         @Override
