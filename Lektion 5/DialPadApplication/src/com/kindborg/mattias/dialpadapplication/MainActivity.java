@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
                 return true;
 
             case R.id.mainmenu_keysoundtype_voice:
-                dialPadView.setKeySoundType(DialPadView.KeySoundType.voice);
+                dialPadView.setKeySoundType(DialPadView.KeySoundType.sound);
                 item.setChecked(true);
                 return true;
 

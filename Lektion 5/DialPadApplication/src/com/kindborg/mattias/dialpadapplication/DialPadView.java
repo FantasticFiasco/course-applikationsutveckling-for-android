@@ -89,8 +89,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
                 keySound = new BeepKeySound();
                 break;
 
-            case voice:
-                keySound = new VoiceKeySound(getContext(), keys);
+            case sound:
+                keySound = new KeySound(getContext(), keys);
                 break;
 
             default:
@@ -393,7 +393,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
      */
     public static enum KeySoundType {
         beep,
-        voice
+        sound
     }
 
     /**
@@ -412,8 +412,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
      */
     private class Key {
 
-        public static final int SOUNDLESS_TONE = -1;
-        public static final String SOUNDLESS_SOUND = "";
+        public static final String NO_SOUND = "";
+        public static final int NO_TONE = -1;
 
         private final char key;
         private final int row;
@@ -422,12 +422,12 @@ public class DialPadView extends View implements View.OnLongClickListener {
         private final int columnSpan;
         private final Bitmap normalKey;
         private final Bitmap pressedKey;
-        private final String voiceSoundFileName;
+        private final String soundFileName;
         private final int beepToneType;
         private final RectF keyDestination;
         private final RectF keyContentDestination;
 
-        private int voiceSoundId;
+        private int loadedSoundId;
         private boolean isPressed;
 
         public Key(
@@ -438,7 +438,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId,
-            String voiceSoundFileName,
+            String soundFileName,
             int beepToneType) {
             this.key = key;
             this.row = row;
@@ -447,7 +447,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             this.columnSpan = columnSpan;
             this.normalKey = BitmapFactory.decodeResource(getResources(), normalButtonResourceId);
             this.pressedKey = BitmapFactory.decodeResource(getResources(), pressedButtonResourceId);
-            this.voiceSoundFileName = voiceSoundFileName;
+            this.soundFileName = soundFileName;
             this.beepToneType = beepToneType;
             keyDestination = new RectF();
             keyContentDestination = new RectF();
@@ -470,7 +470,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.SOUNDLESS_SOUND, Key.SOUNDLESS_TONE);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_SOUND, Key.NO_TONE);
         }
 
         @Override
@@ -493,7 +493,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.SOUNDLESS_SOUND, Key.SOUNDLESS_TONE);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_SOUND, Key.NO_TONE);
         }
 
         @Override
@@ -532,13 +532,13 @@ public class DialPadView extends View implements View.OnLongClickListener {
     }
 
     /**
-     * Class responsible for playing voices as sound when a key is pressed.
+     * Class responsible for playing sounds when a key is pressed.
      */
-    private static class VoiceKeySound implements IKeySound {
+    private static class KeySound implements IKeySound {
 
         private SoundPool soundPool;
 
-        public VoiceKeySound(Context context, List<Key> keys) {
+        public KeySound(Context context, List<Key> keys) {
             soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
             // Load the sounds for all keys
@@ -552,17 +552,17 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         @Override
         public KeySoundType getType() {
-            return KeySoundType.voice;
+            return KeySoundType.sound;
         }
 
         @Override
         public void play(Key key) {
-            soundPool.play(key.voiceSoundId, 1, 1, 0, 0, 1);
+            soundPool.play(key.loadedSoundId, 1, 1, 0, 0, 1);
         }
 
         @Override
         public void stop() {
-            // It is not needed to stop the voice sound. Either a new sound is
+            // It is not needed to stop the sound. Either a new sound is
             // played resulting in the previous to be stopped, or the sound
             // should be played to the end.
         }
