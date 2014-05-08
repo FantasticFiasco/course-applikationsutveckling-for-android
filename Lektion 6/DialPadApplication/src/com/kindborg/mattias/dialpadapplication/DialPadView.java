@@ -21,10 +21,10 @@ public class DialPadView extends View implements View.OnLongClickListener {
     private final Paint normalKeyForegroundPaint;
     private final Paint normalKeyBackgroundPaint;
     private final Paint pressedKeyBackgroundPaint;
+    private final StringBuilder numberBuilder;
 
     private IKeySound keySound;
     private IOnDialNumberListener onDialNumberListener;
-    private StringBuilder numberBuilder;
     private RectF numberDestination;
 
     public DialPadView(Context context, AttributeSet attrs) {
@@ -63,11 +63,11 @@ public class DialPadView extends View implements View.OnLongClickListener {
         normalKeyBackgroundPaint = createPaint(50, 50, 50);
         pressedKeyBackgroundPaint = createPaint(150, 150, 150);
 
-        // Create default key sound type
-        setKeySoundType(KeySoundType.beep);
-
         // Create number builder
         numberBuilder = new StringBuilder();
+
+        // Create default key sound type
+        setKeySoundType(KeySoundType.beep);
     }
 
     /**
@@ -91,8 +91,8 @@ public class DialPadView extends View implements View.OnLongClickListener {
                 keySound = new BeepKeySound();
                 break;
 
-            case sound:
-                keySound = new KeySound(getContext(), keys);
+            case voice:
+                keySound = new VoiceKeySound(keys);
                 break;
 
             default:
@@ -395,7 +395,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
      */
     public static enum KeySoundType {
         beep,
-        sound
+        voice
     }
 
     /**
@@ -414,7 +414,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
      */
     private class Key {
 
-        public static final String NO_SOUND = "";
+        public static final String NO_VOICE = "";
         public static final int NO_TONE = -1;
 
         private final char key;
@@ -472,7 +472,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_SOUND, Key.NO_TONE);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_VOICE, Key.NO_TONE);
         }
 
         @Override
@@ -495,7 +495,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
             int columnSpan,
             int normalButtonResourceId,
             int pressedButtonResourceId) {
-            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_SOUND, Key.NO_TONE);
+            super((char) -1, row, column, rowSpan, columnSpan, normalButtonResourceId, pressedButtonResourceId, Key.NO_VOICE, Key.NO_TONE);
         }
 
         @Override
@@ -534,13 +534,13 @@ public class DialPadView extends View implements View.OnLongClickListener {
     }
 
     /**
-     * Class responsible for playing sounds when a key is pressed.
+     * Class responsible for playing a voice when a key is pressed.
      */
-    private static class KeySound implements IKeySound {
+    private static class VoiceKeySound implements IKeySound {
 
         private SoundPool soundPool;
 
-        public KeySound(Context context, List<Key> keys) {
+        public VoiceKeySound(List<Key> keys) {
             soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
             File sdcard = Environment.getExternalStorageDirectory();
@@ -548,7 +548,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
             // Load the sounds for all keys
             for (Key key : keys) {
-                if (key.soundFileName != Key.NO_SOUND) {
+                if (key.soundFileName != Key.NO_VOICE) {
                     key.loadedSoundId = soundPool.load(
                         soundDirectory.getAbsolutePath() + "/" + key.soundFileName,
                         1);
@@ -558,7 +558,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         @Override
         public KeySoundType getType() {
-            return KeySoundType.sound;
+            return KeySoundType.voice;
         }
 
         @Override
