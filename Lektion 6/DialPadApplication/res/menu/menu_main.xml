@@ -11,6 +11,6 @@
         <!-- Voice key sound type -->
         <item
 	        android:id="@+id/mainmenu_keysoundtype_voice"
-	        android:title="@string/keysoundtype_sound" />
+	        android:title="@string/keysoundtype_voice" />
     </group>
 </menu>
