@@ -2,10 +2,11 @@
 <resources>
 
     <string name="app_name">DialPad Application</string>
-    <string name="keysoundtype_beep">Beep</string>
-    <string name="keysoundtype_voice">Voice</string>
+    <string name="mainmenu_keysoundtype_beep">Beep</string>
+    <string name="mainmenu_keysoundtype_voice">Voice</string>
+    <string name="mainmenu_download">Download</string>
     <string name="mainactivity_nosdcard">Cannot load sounds from SD card</string>
-    <string name="title_activity_download">DownloadActivity</string>
+    <string name="downloadactivity_title">Download new sounds</string>
     <string name="action_settings">Settings</string>
 
 </resources>

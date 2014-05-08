@@ -1,18 +1,20 @@
 package com.kindborg.mattias.dialpadapplication;
 
-import android.app.*;
 import android.content.*;
 import android.net.Uri;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
 
-public class MainActivity extends Activity implements DialPadView.IOnDialNumberListener {
+public class MainActivity extends BaseActivity implements DialPadView.IOnDialNumberListener {
 
     private static final String INSTANCESTATE_KEYSOUNDTYPE = "KEYSOUNDTYPE";
     private static final String INSTANCESTATE_NUMBER = "NUMBER";
+    private static final String DOWNLOAD_URL = "http://dt031g.programvaruteknik.nu/dialpad/sounds/";
 
     private DialPadView dialPadView;
+    private boolean isExternalStorageReadable;
+    private boolean isExternalStorageWritable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,11 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
             dialPadView.setNumber(savedInstanceState.getString(INSTANCESTATE_NUMBER));
         }
 
-        // Inform user that no SD card exists
-        if (!ExternalStorage.isExternalStorageReadable()) {
+        isExternalStorageReadable = ExternalStorage.isExternalStorageReadable();
+        isExternalStorageWritable = ExternalStorage.isExternalStorageWritable();
+
+        // Inform user if external storage isn't readable
+        if (!isExternalStorageReadable) {
             Toast
                 .makeText(this, R.string.mainactivity_nosdcard, Toast.LENGTH_SHORT)
                 .show();
@@ -52,6 +57,12 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        // Disable download menu item if external storage isn't writable
+        if (!isExternalStorageWritable) {
+            MenuItem downloadMenuItem = menu.findItem(R.id.mainmenu_download);
+            downloadMenuItem.setEnabled(false);
+        }
+
         // Make sure menu items are in sync with DialPadView settings
         MenuItem selectedKeySoundTypeMenuItem = dialPadView.getKeySoundType() == DialPadView.KeySoundType.beep ?
             menu.findItem(R.id.mainmenu_keysoundtype_beep) :
@@ -65,6 +76,13 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.mainmenu_download:
+                Intent intent = new Intent(this, DownloadActivity.class);
+                intent.putExtra(DownloadActivity.EXTRA_SOURCEURL, DOWNLOAD_URL);
+                intent.putExtra(DownloadActivity.EXTRA_TARGETDIRECTORY, ExternalStorage.createPath("dialpad/sounds/"));
+                startActivity(intent);
+                return true;
+
             case R.id.mainmenu_keysoundtype_beep:
                 dialPadView.setKeySoundType(DialPadView.KeySoundType.beep);
                 item.setChecked(true);
@@ -86,16 +104,5 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
 
         outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
         outState.putString(INSTANCESTATE_NUMBER, dialPadView.getNumber());
-    }
-
-    /**
-     * Gets value indicating whether specified {@link Bundle} has specified key.
-     */
-    private boolean hasInstanceState(Bundle bundle, String key) {
-        if (bundle == null) {
-            return false;
-        }
-
-        return bundle.containsKey(key);
     }
 }

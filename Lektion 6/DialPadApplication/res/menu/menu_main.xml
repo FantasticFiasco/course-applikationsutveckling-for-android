@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     
+    <!-- Download -->
+    <item
+        android:id="@+id/mainmenu_download"
+        android:title="@string/mainmenu_download"
+        android:icon="@drawable/ic_action_download"
+        android:showAsAction="ifRoom" />
+    
+    <!-- Keysound -->
     <group android:checkableBehavior="single">
         
         <!-- Beep key sound type -->
         <item
 	        android:id="@+id/mainmenu_keysoundtype_beep"
-	        android:title="@string/keysoundtype_beep" />
+	        android:title="@string/mainmenu_keysoundtype_beep" />
         
         <!-- Voice key sound type -->
         <item
 	        android:id="@+id/mainmenu_keysoundtype_voice"
-	        android:title="@string/keysoundtype_voice" />
+	        android:title="@string/mainmenu_keysoundtype_voice" />
     </group>
 </menu>
