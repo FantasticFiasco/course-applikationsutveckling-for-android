@@ -1,5 +1,7 @@
 package com.kindborg.mattias.dialpadapplication;
 
+import java.io.*;
+
 import android.os.*;
 
 /**
@@ -14,5 +16,24 @@ public class ExternalStorage {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED) ||
             state.equals(Environment.MEDIA_MOUNTED_READ_ONLY);
+    }
+
+    /**
+     * Gets a value indicating whether external storage is in a writable state.
+     */
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return state.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    /**
+     * Create a path pointing to specified path on the external storage.
+     */
+    public static String createPath(String path) {
+        File file = new File(
+            Environment.getExternalStorageDirectory(),
+            path);
+
+        return file.getAbsolutePath();
     }
 }
