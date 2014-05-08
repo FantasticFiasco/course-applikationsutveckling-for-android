@@ -31,7 +31,7 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
         }
 
         // Inform user that no SD card exists
-        if (!isExternalStorageReadable()) {
+        if (!ExternalStorage.isExternalStorageReadable()) {
             Toast
                 .makeText(this, R.string.mainactivity_nosdcard, Toast.LENGTH_SHORT)
                 .show();
@@ -71,7 +71,7 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
                 return true;
 
             case R.id.mainmenu_keysoundtype_voice:
-                dialPadView.setKeySoundType(DialPadView.KeySoundType.sound);
+                dialPadView.setKeySoundType(DialPadView.KeySoundType.voice);
                 item.setChecked(true);
                 return true;
 
@@ -86,12 +86,6 @@ public class MainActivity extends Activity implements DialPadView.IOnDialNumberL
 
         outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
         outState.putString(INSTANCESTATE_NUMBER, dialPadView.getNumber());
-    }
-
-    private boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED) ||
-            state.equals(Environment.MEDIA_MOUNTED_READ_ONLY);
     }
 
     /**
