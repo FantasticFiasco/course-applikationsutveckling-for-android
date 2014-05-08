@@ -477,7 +477,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         @Override
         public void onKeyPressed() {
-            if (onDialNumberListener != null) {
+            if (numberBuilder.length() > 0 && onDialNumberListener != null) {
                 onDialNumberListener.onDialNumber(numberBuilder.toString());
             }
         }
