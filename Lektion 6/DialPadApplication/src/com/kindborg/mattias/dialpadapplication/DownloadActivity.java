@@ -81,19 +81,30 @@ public class DownloadActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(String... urls) {
+            boolean success = download(urls[0]);
+            if (success) {
+                success = unzip();
+            }
+
+            return success;
+        }
+
+        private boolean download(String url) {
             InputStream input = null;
             OutputStream output = null;
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL(urls[0]);
-                connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) new URL(url).openConnection();
                 connection.connect();
 
                 // Handle HTTP failures
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                     return false;
                 }
+
+                // Ensure directory exists
+                ExternalStorage.ensureDirectoryExists(targetDirectory);
 
                 // Download the file
                 input = connection.getInputStream();
@@ -124,6 +135,10 @@ public class DownloadActivity extends BaseActivity {
             }
 
             return true;
+        }
+
+        private boolean unzip() {
+            return ZIP.decompress(targetFileName, targetDirectory);
         }
     }
 }
