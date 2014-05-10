@@ -31,6 +31,14 @@ public class MainActivity extends Activity {
         doodleView.setPoints(convertToPoints(savedInstanceState.getString(INSTANCESTATE_DOODLE)));
     }
 
+    // The following rules define the format points are saved in:
+    //   * Points are separated using the delimiter ,
+    //   * A point consists of two coordinates, these are separated by the character ;
+    //   * A point will have the following format:
+    //         X;Y            X and Y are coordinates of type float
+    //   * A point acting as stop will have the following format:
+    //         X;Y]           X and Y are coordinates of type float
+    //                        ] marks the point as a stop
     private static String convertToString(List<Point> points) {
         StringBuilder pointsAsString = new StringBuilder();
 

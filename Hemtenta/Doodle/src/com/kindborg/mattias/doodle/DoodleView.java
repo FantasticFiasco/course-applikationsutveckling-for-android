@@ -67,9 +67,8 @@ public class DoodleView extends View {
             invalidate();
             return true;
         }
-        else {
-            return super.onTouchEvent(event);
-        }
+
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -77,12 +76,15 @@ public class DoodleView extends View {
         Point previousPoint = null;
 
         for (Point point : points) {
+            // If I don't draw the coordinate as a point as well as a line, I
+            // get strange artifacts in the drawn line
             canvas.drawPoint(point.x, point.y, paint);
 
             if (previousPoint != null) {
                 canvas.drawLine(previousPoint.x, previousPoint.y, point.x, point.y, paint);
             }
 
+            // Make sure line stops are respected
             previousPoint = point.isStop ? null : point;
         }
     }
