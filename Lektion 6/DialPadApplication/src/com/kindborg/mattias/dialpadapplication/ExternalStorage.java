@@ -27,6 +27,15 @@ public class ExternalStorage {
     }
 
     /**
+     * Gets a value indicating whether file represented by specified absolute
+     * file name exists.
+     */
+    public static boolean fileExists(String absoluteFileName) {
+        File file = new File(absoluteFileName);
+        return file.exists() && file.isFile();
+    }
+
+    /**
      * Create a path pointing to specified path on the external storage.
      */
     public static String createPath(String path) {
@@ -35,5 +44,12 @@ public class ExternalStorage {
             path);
 
         return file.getAbsolutePath();
+    }
+
+    /**
+     * Combines specified directory name with specified file name.
+     */
+    public static String combine(String directoryName, String fileName) {
+        return directoryName + File.separator + fileName;
     }
 }

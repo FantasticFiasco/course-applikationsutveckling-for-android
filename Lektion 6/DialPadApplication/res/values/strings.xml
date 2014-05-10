@@ -7,6 +7,8 @@
     <string name="mainmenu_download">Download</string>
     <string name="mainactivity_nosdcard">Cannot load sounds from SD card</string>
     <string name="downloadactivity_title">Download new sounds</string>
+    <string name="downloadactivity_download_message">Downloading&#8230;</string>
+    <string name="downloadactivity_download_errormessage">Download failed</string>
     <string name="action_settings">Settings</string>
 
 </resources>
