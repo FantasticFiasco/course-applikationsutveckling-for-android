@@ -8,17 +8,9 @@
         android:icon="@drawable/ic_action_download"
         android:showAsAction="ifRoom" />
     
-    <!-- Keysound -->
-    <group android:checkableBehavior="single">
-        
-        <!-- Beep key sound type -->
-        <item
-	        android:id="@+id/mainmenu_keysoundtype_beep"
-	        android:title="@string/mainmenu_keysoundtype_beep" />
-        
-        <!-- Voice key sound type -->
-        <item
-	        android:id="@+id/mainmenu_keysoundtype_voice"
-	        android:title="@string/mainmenu_keysoundtype_voice" />
-    </group>
+    <!-- Settings -->
+    <item
+        android:id="@+id/mainmenu_settings"
+        android:title="@string/mainmenu_settings"
+        android:showAsAction="never" />
 </menu>
