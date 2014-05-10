@@ -63,13 +63,6 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
             downloadMenuItem.setEnabled(false);
         }
 
-        // Make sure menu items are in sync with DialPadView settings
-        MenuItem selectedKeySoundTypeMenuItem = dialPadView.getKeySoundType() == DialPadView.KeySoundType.beep ?
-            menu.findItem(R.id.mainmenu_keysoundtype_beep) :
-            menu.findItem(R.id.mainmenu_keysoundtype_voice);
-
-        selectedKeySoundTypeMenuItem.setChecked(true);
-
         return true;
     }
 
@@ -83,14 +76,8 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
                 startActivity(intent);
                 return true;
 
-            case R.id.mainmenu_keysoundtype_beep:
-                dialPadView.setKeySoundType(DialPadView.KeySoundType.beep);
-                item.setChecked(true);
-                return true;
-
-            case R.id.mainmenu_keysoundtype_voice:
-                dialPadView.setKeySoundType(DialPadView.KeySoundType.voice);
-                item.setChecked(true);
+            case R.id.mainmenu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
 
             default:
