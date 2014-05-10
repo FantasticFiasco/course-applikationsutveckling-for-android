@@ -5,5 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.kindborg.mattias.doodle.MainActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame">
+    
+    <com.kindborg.mattias.doodle.DoodleView
+        android:id="@+id/mainview_doodleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
+</LinearLayout>
 
