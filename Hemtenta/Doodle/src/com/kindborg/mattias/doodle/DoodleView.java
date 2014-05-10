@@ -1,5 +1,7 @@
 package com.kindborg.mattias.doodle;
 
+import static com.kindborg.mattias.doodle.Assert.*;
+
 import java.util.*;
 
 import android.content.*;
@@ -23,19 +25,22 @@ public class DoodleView extends View {
         paint.setStrokeWidth(5);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        Point previousPoint = null;
+    /**
+     * Gets the points that represents the doodle.
+     */
+    public List<Point> getPoints() {
+        return points;
+    }
 
-        for (Point point : points) {
-            canvas.drawPoint(point.x, point.y, paint);
+    /**
+     * Sets the points that represents the doodle.
+     */
+    public void setPoints(List<Point> points) {
+        assertNotNull(points);
 
-            if (previousPoint != null) {
-                canvas.drawLine(previousPoint.x, previousPoint.y, point.x, point.y, paint);
-            }
-
-            previousPoint = point.isStop ? null : point;
-        }
+        this.points.clear();
+        this.points.addAll(points);
+        invalidate();
     }
 
     @Override
@@ -67,6 +72,21 @@ public class DoodleView extends View {
         }
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Point previousPoint = null;
+
+        for (Point point : points) {
+            canvas.drawPoint(point.x, point.y, paint);
+
+            if (previousPoint != null) {
+                canvas.drawLine(previousPoint.x, previousPoint.y, point.x, point.y, paint);
+            }
+
+            previousPoint = point.isStop ? null : point;
+        }
+    }
+
     /**
      * Class representing a point drawn on the canvas.
      */
@@ -87,6 +107,27 @@ public class DoodleView extends View {
             Point point = create(x, y);
             point.isStop = true;
             return point;
+        }
+
+        /**
+         * Gets the x-coordinate.
+         */
+        public float getX() {
+            return x;
+        }
+
+        /**
+         * Gets the y-coordinate.
+         */
+        public float getY() {
+            return y;
+        }
+
+        /**
+         * Gets a value indicating whether this point is a stop in a line.
+         */
+        public boolean getIsStop() {
+            return isStop;
         }
     }
 }
