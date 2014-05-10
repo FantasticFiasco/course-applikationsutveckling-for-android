@@ -36,6 +36,13 @@ public class ExternalStorage {
     }
 
     /**
+     * Ensures that specified directory exists.
+     */
+    public static void ensureDirectoryExists(String absoluteDirectoryName) {
+        new File(absoluteDirectoryName).mkdirs();
+    }
+
+    /**
      * Create a path pointing to specified path on the external storage.
      */
     public static String createPath(String path) {
