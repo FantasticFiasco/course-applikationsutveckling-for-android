@@ -1,6 +1,7 @@
 package com.kindborg.mattias.dialpadapplication;
 
 import java.io.*;
+import java.util.*;
 
 import android.os.*;
 
@@ -38,8 +39,41 @@ public class ExternalStorage {
     /**
      * Ensures that specified directory exists.
      */
-    public static void ensureDirectoryExists(String absoluteDirectoryName) {
-        new File(absoluteDirectoryName).mkdirs();
+    public static void ensureDirectoryExists(String path) {
+        new File(path).mkdirs();
+    }
+
+    /**
+     * Gets the directories in specified path.
+     */
+    public static String[] getDirectories(String path) {
+        List<String> directoryList = new ArrayList<String>();
+        File pathFile = new File(path);
+
+        if (pathFile.exists()) {
+            for (File file : pathFile.listFiles()) {
+                if (file.isDirectory()) {
+                    directoryList.add(file.getAbsolutePath());
+                }
+            }
+        }
+
+        String[] directories = new String[directoryList.size()];
+        return directoryList.toArray(directories);
+    }
+
+    /**
+     * Gets the names of specified directories.
+     */
+    public static String[] getDirectoryNames(String[] directoryPaths) {
+        List<String> directoryNameList = new ArrayList<String>();
+
+        for (String directoryPath : directoryPaths) {
+            directoryNameList.add(new File(directoryPath).getName());
+        }
+
+        String[] directoryNames = new String[directoryNameList.size()];
+        return directoryNameList.toArray(directoryNames);
     }
 
     /**

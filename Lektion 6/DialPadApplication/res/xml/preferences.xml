@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Sound type -->
+    <ListPreference
+        android:key="preference_soundtype"
+        android:title="@string/preferences_soundtype"
+        android:entries="@array/preferences_soundtypes"
+        android:entryValues="@array/preferences_soundtypevalues"
+        android:defaultValue="beep" />
+    
+    <!-- Voice file, entries are set in code -->
+    <ListPreference
+        android:key="preference_voicefile"
+        android:title="@string/preferences_voicefile" />
 
 </PreferenceScreen>
