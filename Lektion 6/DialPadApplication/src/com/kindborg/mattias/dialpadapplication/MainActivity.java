@@ -11,6 +11,7 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
     private static final String INSTANCESTATE_KEYSOUNDTYPE = "KEYSOUNDTYPE";
     private static final String INSTANCESTATE_NUMBER = "NUMBER";
     private static final String DOWNLOAD_URL = "http://dt031g.programvaruteknik.nu/dialpad/sounds/";
+    private static final String DOWNLOAD_DIRECTORY = ExternalStorage.createPath("dialpad/sounds/");
 
     private DialPadView dialPadView;
     private boolean isExternalStorageReadable;
@@ -72,12 +73,14 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
             case R.id.mainmenu_download:
                 Intent intent = new Intent(this, DownloadActivity.class);
                 intent.putExtra(DownloadActivity.EXTRA_SOURCEURL, DOWNLOAD_URL);
-                intent.putExtra(DownloadActivity.EXTRA_TARGETDIRECTORY, ExternalStorage.createPath("dialpad/sounds/"));
+                intent.putExtra(DownloadActivity.EXTRA_TARGETDIRECTORY, DOWNLOAD_DIRECTORY);
                 startActivity(intent);
                 return true;
 
             case R.id.mainmenu_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(SettingsActivity.EXTRA_VOICEDIRECTORY, DOWNLOAD_DIRECTORY);
+                startActivity(intent);
                 return true;
 
             default:
