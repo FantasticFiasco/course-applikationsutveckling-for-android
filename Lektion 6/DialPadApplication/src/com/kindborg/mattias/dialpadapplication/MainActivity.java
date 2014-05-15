@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
         String soundType = sharedPreferences.getString(SettingsActivity.KEY_SOUNDTYPE, null);
         String voiceFile = sharedPreferences.getString(SettingsActivity.KEY_VOICEFILE, null);
 
-        if (soundType.equals("beep") || !ExternalStorage.directoryExists(voiceFile)) {
+        if (soundType == null || soundType.equals("beep") || !ExternalStorage.directoryExists(voiceFile)) {
             dialPadView.setKeySoundType(KeySoundType.beep);
         } else {
             dialPadView.setVoiceFile(voiceFile);
