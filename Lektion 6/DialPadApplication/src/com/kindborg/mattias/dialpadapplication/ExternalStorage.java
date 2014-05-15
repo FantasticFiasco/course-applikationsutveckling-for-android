@@ -28,12 +28,21 @@ public class ExternalStorage {
     }
 
     /**
-     * Gets a value indicating whether file represented by specified absolute
-     * file name exists.
+     * Gets a value indicating whether file represented by specified file name
+     * exists.
      */
-    public static boolean fileExists(String absoluteFileName) {
-        File file = new File(absoluteFileName);
+    public static boolean fileExists(String fileName) {
+        File file = new File(fileName);
         return file.exists() && file.isFile();
+    }
+
+    /**
+     * Gets a value indicating whether directory represented by directory name
+     * exists.
+     */
+    public static boolean directoryExists(String directoryName) {
+        File file = new File(directoryName);
+        return file.exists() && file.isDirectory();
     }
 
     /**
