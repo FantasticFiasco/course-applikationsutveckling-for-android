@@ -7,8 +7,8 @@ import android.preference.*;
 public class SettingsActivity extends PreferenceActivity {
 
     public static final String EXTRA_VOICEDIRECTORY = "extra_voicedirectory";
-
-    private static final String KEY_VOICEFILE = "preference_voicefile";
+    public static final String KEY_SOUNDTYPE = "preference_soundtype";
+    public static final String KEY_VOICEFILE = "preference_voicefile";
 
     private ListPreference voiceFile;
 

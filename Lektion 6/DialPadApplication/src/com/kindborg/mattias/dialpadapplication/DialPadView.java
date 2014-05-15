@@ -6,7 +6,6 @@ import java.util.*;
 import android.content.*;
 import android.graphics.*;
 import android.media.*;
-import android.os.*;
 import android.util.*;
 import android.view.*;
 
@@ -24,6 +23,7 @@ public class DialPadView extends View implements View.OnLongClickListener {
     private final StringBuilder numberBuilder;
 
     private IKeySound keySound;
+    private String voiceFile;
     private IOnDialNumberListener onDialNumberListener;
     private RectF numberDestination;
 
@@ -92,12 +92,19 @@ public class DialPadView extends View implements View.OnLongClickListener {
                 break;
 
             case voice:
-                keySound = new VoiceKeySound(keys);
+                keySound = new VoiceKeySound(keys, voiceFile);
                 break;
 
             default:
                 throw new RuntimeException("Unsupported key sound type: " + keySoundType);
         }
+    }
+
+    /**
+     * Sets the voice file used when dial pad is using voices.
+     */
+    public void setVoiceFile(String voiceFile) {
+        this.voiceFile = voiceFile;
     }
 
     /**
@@ -540,11 +547,10 @@ public class DialPadView extends View implements View.OnLongClickListener {
 
         private SoundPool soundPool;
 
-        public VoiceKeySound(List<Key> keys) {
+        public VoiceKeySound(List<Key> keys, String voiceFile) {
             soundPool = new SoundPool(1, AudioManager.STREAM_DTMF, 0);
 
-            File sdcard = Environment.getExternalStorageDirectory();
-            File soundDirectory = new File(sdcard, "dialpad/sounds/mamacita_us");
+            File soundDirectory = new File(voiceFile);
 
             // Load the sounds for all keys
             for (Key key : keys) {

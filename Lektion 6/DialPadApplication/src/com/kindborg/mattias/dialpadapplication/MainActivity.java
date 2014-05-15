@@ -1,8 +1,11 @@
 package com.kindborg.mattias.dialpadapplication;
 
+import com.kindborg.mattias.dialpadapplication.DialPadView.*;
+
 import android.content.*;
 import android.net.Uri;
 import android.os.*;
+import android.preference.*;
 import android.view.*;
 import android.widget.*;
 
@@ -89,10 +92,31 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateDialPadSound();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putSerializable(INSTANCESTATE_KEYSOUNDTYPE, dialPadView.getKeySoundType());
         outState.putString(INSTANCESTATE_NUMBER, dialPadView.getNumber());
+    }
+
+    private void updateDialPadSound() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String soundType = sharedPreferences.getString(SettingsActivity.KEY_SOUNDTYPE, null);
+        String voiceFile = sharedPreferences.getString(SettingsActivity.KEY_VOICEFILE, null);
+
+        if (soundType.equals("beep") || !ExternalStorage.directoryExists(voiceFile)) {
+            dialPadView.setKeySoundType(KeySoundType.beep);
+        } else {
+            dialPadView.setVoiceFile(voiceFile);
+            dialPadView.setKeySoundType(KeySoundType.voice);
+        }
     }
 }
