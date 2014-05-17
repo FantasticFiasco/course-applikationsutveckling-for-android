@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DialPad Application</string>
+    <string name="mainmenu_download">Download</string>
+    <string name="mainmenu_settings">Settings</string>
+    <string name="mainactivity_nosdcard">Cannot load sounds from SD card</string>
+    <string name="preferences_soundtype">Sound type</string>
+    <string-array name="preferences_soundtypes">
+        <item>Beep</item>
+        <item>Voice</item>
+    </string-array>
+    <string name="preferences_voicefile">Voice file</string>
+    <string name="downloadactivity_title">Download new sounds</string>
+    <string name="downloadactivity_download_message">Downloading&#8230;</string>
+    <string name="downloadactivity_download_errormessage">Download failed</string>
+    <string name="action_settings">Settings</string>
+    
+
+</resources>
