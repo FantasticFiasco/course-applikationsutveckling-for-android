@@ -1,82 +1,82 @@
-;Longitude,Latitude,Name,Address 1
-13.009,55.622,"S1 IDS Malmö 0889 - CMP Malmö; 201 25; "
-12.818,55.94,"S2 IDS Glumslöv 0804 - OKQ8 AB; 261 63; "
-12.772,56.02,"S3 IDS Helsingborg 0865 - Volvo; 250 15; "
-14.21,56.028,"S4 IDS Kristianstad 0830 - Volvo; 291 50; "
-13.817,56.163,"S5 IDS Hässleholm 0873 - Transportledet Sverige AB; 281 02; "
-12.9365,56.3885,"S7 IDS Hallandsåsen 0809 - OKQ8; 269 96; "
-12.899,56.655,"S9 IDS Halmstad 0838 - OKQ8; 302 06; "
-12.3518,57.063,"S10 IDS Himle 0818 - OKQ8; 430 10; "
-14.097,57.348,"S11 IDS Klevshult 0807 - OKQ8; 568 92; "
-14.771,56.886,"S12 IDS Växjö 0817 - Volvo; 350 43; "
-16.321,56.6825,"S14 IDS Kalmar 0832 - OKQ8; 392 39; "
-16.447,57.25,"S15 IDS Oskarshamn 0888 - EB Logistik AB; 572 26; "
-11.993517,57.747278,"S16 IDS Hisings Backa 0826 - OKQ8; 422 46; "
-13.661,57.78,"S17 IDS Strängsered 0857 - OKQ8; 523 91; "
-12.133,58.145,"S19 IDS Lilla Edet 0801 - OKQ8; 463 30; "
-12.815,58.0505,"S20 IDS Vårgårda 0816 - OKQ8; 447 91; "
-11.63,58.488,"S22 IDS Håbygård 0803 - OKQ8; 455 91; "
-12.35856,58.55893,"S23 IDS Brålanda 0827 - OKQ8; 460 65; "
-13.857455,58.692435,"S24 IDS Mariestad 0813 - OKQ8; 542 92; "
-16.454592,58.333859,"S25 IDS Ringarum 0837 - OKQ8; 610 41; "
-16.224691,59.001279,"S26 IDS Katrineholm 0835 - Volvo; 641 49; "
-16.470182,59.387516,"S28 IDS Eskilstuna 0841 - Volvo; 633 46; "
-17.82719,59.21515,"S29 IDS Tumba 0855 - LKS Konsult KB; 147 43; "
-18.116672,59.147386,"S31 IDS Haninge 0882 - Haninge Åkeri AB; 136 50; "
-16.567941,59.646252,"S33 IDS Västerås 0864 - Volvo; 721 22; "
-13.14055,59.36756,"S37 IDS Grums 0828 - OKQ8; 664 34; "
-13.852857,59.390855,"S38 IDS Väse 0808 - OKQ8; 660 57; "
-15.40736,60.46993,"S45 IDS Borlänge 0877 - Jale Åkeri AB; 781 70; "
-16.966858,61.073471,"S47 IDS Tönnebro 0845 - OKQ8; 826 22; "
-16.3813,61.344055,"S48 IDS Bollnäs 0821 - Volvo; 821 10; "
-17.201,62.2957,"S50 IDS Timrå 0802 - OKQ8 Detaljhandel AB; 861 36; "
-16.462105,62.440466,"S51 IDS Stöde 0859 - Västra Edebovägen 31; 860 13; "
-17.678768,62.989883,"S52 IDS Kramfors 0852 - Kramfors Fordonsuthyrning; 873 30; "
-14.429835,63.328159,"S53 IDS Krokom 0854 - OKQ8; 835 32; "
-14.68361,63.16978,"S54 IDS Östersund 0887 - Volvo; 831 25; "
-20.96193,64.73642,"S57 IDS Skellefteå 0833 - Volvo; 931 27; "
-21.414355,65.319189,"S58 IDS Piteå 0840 - Volvo; 941 28; "
-16.683633,64.61384,"S63 IDS Vilhelmina 0874 - Inlandsfrakt AB; 912 32; "
-16.163914,64.109438,"S64 IDS Hoting 0879 - SCA Skog AB; 830 80; "
-17.83097,59.45042,"S70 IDS Kallhäll 0883 - OKQ8; 176 75; "
-15.816875,57.502515,"S72 IDS Hultsfred 0895 - Hultsfred Transporter AB; 577 35; "
-17.36656,64.17541,"S75 IDS Åsele 0831 - Inlandsfrakt AB; S-916 60; "
-18.701661,64.587752,"S79 IDS Lycksele 0842 - Transportbolaget i Norr AB; 921 45; "
-18.33164,59.63401,"S91 IDS Roslagsstoppet 1441 - 186 96; "
-17.368831,58.917434,"S95 IDS Sillekrog 1444 - OKQ8; 610 60; "
-16.07868,58.56815,"S97 IDS Klinga 1429 - OKQ8; 605 97; "
-14.66694,58.22525,"S98 IDS Östgötaporten 1401 - OKQ8; 599 94; "
-13.140621,55.371127,"S108 IDS Trelleborg 1458 - Södra Nyhamnsgatan; 231 61; "
-15.828239,59.427256,"S118 IDS Arboga Sätra 1462 - OKQ8 Mälarporten; 732 95; "
-18.065464,59.758429,"S119 IDS Åby Krysset 1411 - Långhundra Transport; 741 95; "
-15.06314,58.56109,"S121 IDS Motala 1464 - Volvo; 591 62; "
-18.278306,59.492004,"S129 IDS Åkersberga 1414 - Åkersberga LBC; 184 21; "
-18.021697,59.299786,"S133 IDS Årsta 1466 - Kyl & Frys Expressen Lastkajen AB; 117 43; "
-17.555509,59.564925,"S134 IDS Bålsta 1424 - MLT AB; 746 50; "
-13.056316,55.628482,"S135 IDS Malmö 1468 - Volvo; 211 24; "
-20.246923,63.81469,"S139 IDS Umeå 1473 - Volvo; 901 24; "
-13.18922,58.492475,"S140 IDS Lidköping 1474 - Volvo; 531 16; "
-17.67882,59.855557,"S142 IDS Uppsala 1472 - Volvo; 751 23; "
-17.927831,59.433626,"S143 IDS Sollentuna 1470 - Volvo; 191 26; "
-13.558648,59.378637,"S145 IDS Karlstad 1477 - Volvo; 652 21; "
-14.15838,57.67821,"S146 IDS Torsvik 1479 - IDS Jönköping; 553 39; "
-18.743839,63.30333,"S147 IDS Örnsköldsvik 1476 - Volvo; 591 24; "
-17.90605,59.26191,"S148 IDS Kungens Kurva 1478 - Volvo; 141 75; "
-14.947875,58.033327,"S149 IDS Tranås 1480 - Volvo; 573 92; "
-11.859529,59.504972,"S152 IDS Töcksfors 1483 - Ståltorpsvägen 11; 670 10; "
-20.141688,63.848421,"S153 IDS Umeå  1469 - Milles Åkeri AB; 901 37; "
-13.470966,56.367099,"S154 IDS Skånes Fagerhult 1488 - Sjuttio 3an; 280 40; "
-12.77994,56.04525,"S157 IDS Helsingborg 1490 - Br Iborn AB; 256 69; "
-15.67826,58.42235,"S158 IDS Linköping 1491 - Fångögatan 4; 582 78; "
-16.180638,58.603505,"S159 IDS Norrköping  1492 - Volvo; 601 05; "
-15.638551,58.418177,"S160 IDS Linköping Rejmes 1493 - Volvo; 581 03; "
-15.230311,59.301013,"S161 IDS Örebro  1494 - Volvo; 703 69; "
-11.813088,57.702712,"S162 IDS Göteborg; Arendal 1495 - Terminalvägen/Hamnviksvägen; 418 79; "
-17.72917,59.84415,"S163 IDS Uppsala Kumla 1496 - OKQ8; 75454; "
-12.9788442,57.7214757,"S164 IDS Borås 1497 - Borås Bil AB; 507 50; "
-14.0022467,57.1758285,"S165 IDS Värnamo 1498 - Sandahlsbolagen AB; 331 53; "
-14.5154213,56.3081942,"S166 IDS Olofström 1499 - Sandahls Fulload AB; 293 91; "
-22.0428519,65.624034,"S167 IDS Luleå 1650 - Sandahlsbolagen Goods & Parcel AB; 973 45; "
-12.2404442,58.3391499,"S168 IDS Trestads Center 1652 - Trestads Center; 462 73; "
-20.2044022,63.8541625,"S169 IDS Umeå 1655 - Kabelvägen 6; 901 33; "
-14.16206,57.74611,"S170 IDS Jönköping 1657 - Finnvedens Lastvagnar AB; 553 02; "
+;Longitude,Latitude,City,Name
+13.009,55.622,Malmö,CMP Malmö
+12.818,55.94,Glumslöv,OKQ8 AB
+12.772,56.02,Helsingborg,Volvo
+14.21,56.028,Kristianstad,Volvo
+13.817,56.163,Hässleholm,Transportledet Sverige AB
+12.9365,56.3885,Hallandsåsen,OKQ8
+12.899,56.655,Halmstad,OKQ8
+12.3518,57.063,Himle,OKQ8
+14.097,57.348,Klevshult,OKQ8
+14.771,56.886,Växjö,Volvo
+16.321,56.6825,Kalmar,OKQ8
+16.447,57.25,Oskarshamn,EB Logistik AB
+11.993517,57.747278,Hisings Backa,OKQ8
+13.661,57.78,Strängsered,OKQ8
+12.133,58.145,Lilla Edet,OKQ8
+12.815,58.0505,Vårgårda,OKQ8
+11.63,58.488,Håbygård 0803 - OKQ8
+12.35856,58.55893,Brålanda,OKQ8
+13.857455,58.692435,Mariestad,OKQ8
+16.454592,58.333859,Ringarum,OKQ8
+16.224691,59.001279,Katrineholm,Volvo
+16.470182,59.387516,Eskilstuna,Volvo
+17.82719,59.21515,Tumba,LKS Konsult KB
+18.116672,59.147386,Haninge,Haninge Åkeri AB
+16.567941,59.646252,Västerås,Volvo
+13.14055,59.36756,Grums,OKQ8
+13.852857,59.390855,Väse,OKQ8
+15.40736,60.46993,Borlänge,Jale Åkeri AB
+16.966858,61.073471,Tönnebro,OKQ8
+16.3813,61.344055,Bollnäs,Volvo
+17.201,62.2957,Timrå,OKQ8 Detaljhandel AB
+16.462105,62.440466,Stöde,Västra Edebovägen 31
+17.678768,62.989883,Kramfors,Kramfors Fordonsuthyrning
+14.429835,63.328159,Krokom,OKQ8
+14.68361,63.16978,Östersund,Volvo
+20.96193,64.73642,Skellefteå,Volvo
+21.414355,65.319189,Piteå,Volvo
+16.683633,64.61384,Vilhelmina,Inlandsfrakt AB
+16.163914,64.109438,Hoting,SCA Skog AB
+17.83097,59.45042,Kallhäll,OKQ8
+15.816875,57.502515,Hultsfred,Hultsfred Transporter AB
+17.36656,64.17541,Åsele,Inlandsfrakt AB
+18.701661,64.587752,Lycksele,Transportbolaget i Norr AB
+18.33164,59.63401,Roslagsstoppet,
+17.368831,58.917434,Sillekrog,OKQ8
+16.07868,58.56815,Klinga,OKQ8
+14.66694,58.22525,Östgötaporten,OKQ8
+13.140621,55.371127,Trelleborg,Södra Nyhamnsgatan
+15.828239,59.427256,Arboga Sätra,OKQ8 Mälarporten
+18.065464,59.758429,Åby Krysset,Långhundra Transport
+15.06314,58.56109,Motala,Volvo
+18.278306,59.492004,Åkersberga,Åkersberga LBC
+18.021697,59.299786,Årsta,Kyl & Frys Expressen Lastkajen AB
+17.555509,59.564925,Bålsta,MLT AB
+13.056316,55.628482,Malmö,Volvo
+20.246923,63.81469,Umeå,Volvo
+13.18922,58.492475,Lidköping,Volvo
+17.67882,59.855557,Uppsala,Volvo
+17.927831,59.433626,Sollentuna,Volvo
+13.558648,59.378637,Karlstad,Volvo
+14.15838,57.67821,Torsvik,Jönköping
+18.743839,63.30333,Örnsköldsvik,Volvo
+17.90605,59.26191,Kungens Kurva,Volvo
+14.947875,58.033327,Tranås,Volvo
+11.859529,59.504972,Töcksfors,Ståltorpsvägen 11
+20.141688,63.848421,Umeå,Milles Åkeri AB
+13.470966,56.367099,Skånes Fagerhult,Sjuttio 3an
+12.77994,56.04525,Helsingborg,Br Iborn AB
+15.67826,58.42235,Linköping,Fångögatan 4
+16.180638,58.603505,Norrköping,Volvo
+15.638551,58.418177,Linköping Rejmes,Volvo
+15.230311,59.301013,Örebro,Volvo
+11.813088,57.702712,Göteborg,Terminalvägen/Hamnviksvägen
+17.72917,59.84415,Uppsala Kumla,OKQ8
+12.9788442,57.7214757,Borås,Borås Bil AB
+14.0022467,57.1758285,Värnamo,Sandahlsbolagen AB
+14.5154213,56.3081942,Olofström,Sandahls Fulload AB
+22.0428519,65.624034,Luleå,Sandahlsbolagen Goods & Parcel AB
+12.2404442,58.3391499,Trestads Center,Trestads Center
+20.2044022,63.8541625,Umeå,Kabelvägen 6
+14.16206,57.74611,Jönköping,Finnvedens Lastvagnar AB
