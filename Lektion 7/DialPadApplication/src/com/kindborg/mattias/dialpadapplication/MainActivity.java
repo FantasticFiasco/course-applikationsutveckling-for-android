@@ -6,6 +6,7 @@ import android.content.*;
 import android.net.Uri;
 import android.os.*;
 import android.preference.*;
+import android.text.format.Time;
 import android.view.*;
 import android.widget.*;
 
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
     private static final String DOWNLOAD_DIRECTORY = ExternalStorage.createPath("dialpad/sounds/");
 
     private DialPadView dialPadView;
+    private CallsDataSource callsDataSource;
     private boolean isExternalStorageReadable;
     private boolean isExternalStorageWritable;
 
@@ -45,6 +47,8 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
                 .makeText(this, R.string.mainactivity_nosdcard, Toast.LENGTH_SHORT)
                 .show();
         }
+
+        callsDataSource = new CallsDataSource(this);
     }
 
     @Override
@@ -53,6 +57,9 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(telephoneNumber)));
 
         if (IntentExtensions.isIntentAvailable(this, intent)) {
+            Time time = new Time();
+            time.setToNow();
+            callsDataSource.create(time, telephoneNumber);
             startActivity(intent);
         }
     }
@@ -92,9 +99,17 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        callsDataSource.close();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
+        callsDataSource.open();
         updateDialPadSound();
     }
 
