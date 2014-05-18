@@ -17,4 +17,9 @@ public class Call {
     public String getNumber() {
         return number;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", number, dateTime);
+    }
 }

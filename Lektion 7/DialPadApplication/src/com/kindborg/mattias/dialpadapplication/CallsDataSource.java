@@ -5,7 +5,6 @@ import java.util.*;
 import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
-import android.text.format.*;
 
 public class CallsDataSource {
 
@@ -32,10 +31,10 @@ public class CallsDataSource {
         callsDatabaseHelper.close();
     }
 
-    public void create(Time dateTime, String number) {
+    public void create(String dateTime, String number) {
         ContentValues values = new ContentValues();
 
-        values.put(CallsDatabaseHelper.Calls.DATETIME, dateTime.toString());
+        values.put(CallsDatabaseHelper.Calls.DATETIME, dateTime);
         values.put(CallsDatabaseHelper.Calls.NUMBER, number);
 
         database.insert(CallsDatabaseHelper.Calls.TABLE_NAME, null, values);
@@ -65,8 +64,8 @@ public class CallsDataSource {
     }
 
     private Call cursorToCall(Cursor cursor) {
-        String dateTime = cursor.getString(0);
-        String number = cursor.getString(1);
+        String dateTime = cursor.getString(1);
+        String number = cursor.getString(2);
 
         return new Call(dateTime, number);
     }

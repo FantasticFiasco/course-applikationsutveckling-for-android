@@ -1,12 +1,14 @@
 package com.kindborg.mattias.dialpadapplication;
 
+import java.text.*;
+import java.util.*;
+
 import com.kindborg.mattias.dialpadapplication.DialPadView.*;
 
 import android.content.*;
-import android.net.Uri;
+import android.net.*;
 import android.os.*;
 import android.preference.*;
-import android.text.format.Time;
 import android.view.*;
 import android.widget.*;
 
@@ -57,9 +59,8 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(telephoneNumber)));
 
         if (IntentExtensions.isIntentAvailable(this, intent)) {
-            Time time = new Time();
-            time.setToNow();
-            callsDataSource.create(time, telephoneNumber);
+            String dateTime = DateFormat.getDateTimeInstance().format(new Date());
+            callsDataSource.create(dateTime, telephoneNumber);
             startActivity(intent);
         }
     }
@@ -85,6 +86,10 @@ public class MainActivity extends BaseActivity implements DialPadView.IOnDialNum
                 intent.putExtra(DownloadActivity.EXTRA_SOURCEURL, DOWNLOAD_URL);
                 intent.putExtra(DownloadActivity.EXTRA_TARGETDIRECTORY, DOWNLOAD_DIRECTORY);
                 startActivity(intent);
+                return true;
+
+            case R.id.mainmenu_recent:
+                startActivity(new Intent(this, RecentActivity.class));
                 return true;
 
             case R.id.mainmenu_settings:
