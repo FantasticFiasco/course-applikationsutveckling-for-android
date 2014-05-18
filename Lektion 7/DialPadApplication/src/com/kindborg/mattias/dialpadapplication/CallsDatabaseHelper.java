@@ -6,7 +6,7 @@ import android.database.sqlite.*;
 public class CallsDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "calls.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE = "create table " +
         Calls.TABLE_NAME +
