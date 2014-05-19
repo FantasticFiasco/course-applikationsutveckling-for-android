@@ -1,45 +1,77 @@
 package com.kindborg.mattias.gasstations;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import java.io.*;
+import java.util.*;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+
+import android.os.*;
+import android.support.v4.app.*;
 
 public class MainActivity extends FragmentActivity {
 
-    private GoogleMap mMap;
+    private static final LatLngBounds SWEDEN = new LatLngBounds(new LatLng(54, 9), new LatLng(70, 25));
+
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpMapIfNeeded();
+
+        map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+
+        // Read file with petrol stations
+        new PetrolStationReader().execute();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
+    private void addPetrolStations(List<PetrolStation> petrolStations) {
+        for (PetrolStation petrolStation : petrolStations) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                .position(petrolStation.getLatLng())
+                .title(String.format("%s (%s)", petrolStation.getName(), petrolStation.getCity()));
 
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the
-        // map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+            map.addMarker(markerOptions);
         }
+
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(SWEDEN, 0));
     }
 
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    private class PetrolStationReader extends AsyncTask<Void, Void, List<PetrolStation>> {
+
+        @Override
+        protected List<PetrolStation> doInBackground(Void... params) {
+            InputStream inputStream = MainActivity.this.getResources().openRawResource(R.raw.petrol_stations);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            List<PetrolStation> petrolStations = new ArrayList<PetrolStation>();
+            String line = null;
+
+            try {
+                while ((line = reader.readLine()) != null) {
+                    // Ignore comments
+                    if (line.startsWith(";")) {
+                        continue;
+                    }
+
+                    String[] values = line.split(",");
+                    petrolStations.add(new PetrolStation(
+                        Double.parseDouble(values[0]),
+                        Double.parseDouble(values[1]),
+                        values[2],
+                        values[3]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return petrolStations;
+        }
+
+        @Override
+        protected void onPostExecute(List<PetrolStation> result) {
+            addPetrolStations(result);
+        }
     }
 }
