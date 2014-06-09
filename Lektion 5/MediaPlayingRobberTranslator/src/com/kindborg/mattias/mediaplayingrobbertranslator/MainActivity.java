@@ -186,7 +186,7 @@ public class MainActivity extends ActivityBase implements OnSharedPreferenceChan
     }
 
     private boolean getIsPlayingMusic() {
-        return getPreferences(MainActivity.class).getBoolean(PREFERENCE_PLAYMUSIC, true);
+        return getPreferences(this).getBoolean(PREFERENCE_PLAYMUSIC, true);
     }
 
     /**

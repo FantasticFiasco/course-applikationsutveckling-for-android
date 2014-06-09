@@ -13,13 +13,13 @@ public abstract class ActivityBase extends Activity {
      * Retrieve a {@link SharedPreferences} object for specified class through
      * which you can retrieve and modify its values.
      * 
-     * @param source
-     *            The class to create the preference name from.
+     * @param context
+     *            The {@link Context} to get preferences from.
      * @return Returns the single {@link SharedPreferences} instance that can be
      *         used to retrieve and modify the preference values.
      */
-    protected SharedPreferences getPreferences(Class<?> source) {
-        String name = source.getName();
+    protected SharedPreferences getPreferences(Context context) {
+        String name = context.getPackageName() + "_preferences";
         return getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
@@ -31,13 +31,13 @@ public abstract class ActivityBase extends Activity {
      * any changes you perform in the Editor actually show up in the
      * SharedPreferences.
      * 
-     * @param source
-     *            The class to create the preference name from.
+     * @param context
+     *            The {@link Context} to get preferences from.
      * @return Returns a new instance of the {@link SharedPreferences.Editor}
      *         interface, allowing you to modify the values in this
      *         SharedPreferences object.
      */
-    protected Editor getPreferencesEditor(Class<?> source) {
-        return getPreferences(source).edit();
+    protected Editor getPreferencesEditor(Context context) {
+        return getPreferences(context).edit();
     }
 }

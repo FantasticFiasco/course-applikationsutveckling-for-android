@@ -121,8 +121,8 @@ public class TranslateActivity extends ActivityBase {
 
     private void loadTranslatedText() {
         String text = isTranslatingToRobber ?
-            getPreferences(TranslateActivity.class).getString(PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE, "") :
-            getPreferences(TranslateActivity.class).getString(PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE, "");
+            getPreferences(this).getString(PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE, "") :
+            getPreferences(this).getString(PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE, "");
 
         translatedText.setText(text);
     }
@@ -132,7 +132,7 @@ public class TranslateActivity extends ActivityBase {
             PREFERENCE_TEXTTRANSLATEDTOROBBERLANGUAGE :
             PREFERENCE_TEXTTRANSLATEDFROMROBBERLANGUAGE;
 
-        Editor editor = getPreferencesEditor(TranslateActivity.class);
+        Editor editor = getPreferencesEditor(this);
         editor.putString(key, translatedText.getText().toString());
         editor.commit();
     }
